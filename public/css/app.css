@@ -1,0 +1,44 @@
+h1{
+    margin: 0 auto !important;
+    text-align: center;
+}
+.app-container{
+    margin-top: 4%;
+    padding-bottom: 3%;
+}
+.app-menu{
+    background-color: #3ADF00;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: black;
+}
+.action-form{
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 2%;
+}
+.action-edit a{
+    color: green;
+    float: left;
+    margin-right: 1%;
+}
+.action-delete button {
+    margin-top: 5%;
+    margin-left: 1%;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+.create-button{
+    text-align: center;
+    margin: 1%;
+}
+.create-button span{
+    padding: 1% 5%;
+}
+.space-chapter{
+    margin-left: 2%;
+}
