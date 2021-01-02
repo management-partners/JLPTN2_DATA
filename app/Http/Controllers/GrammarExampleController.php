@@ -85,7 +85,11 @@ class GrammarExampleController extends Controller
     public function showEx($id)
     {
         $grammarEx = GrammarExample::where('productId', $id)-> get();
-        return view('grammar.grammar_example', ['grammarEx'=>$grammarEx]);
+        $lstChapter = Grammar::find($id);
+        $cate = $lstChapter->cateId;
+        $chapter = $lstChapter->chapter;
+        $chapterName = $lstChapter->chapterName;
+        return view('grammar.grammar_example', ['grammarEx'=> GrammarExampleResource::collection($grammarEx),'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName]);
     }
 
     /**

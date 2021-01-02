@@ -92,15 +92,6 @@
                 </select>
             </div>
         </div>
-        {{-- <div class="mb-3 row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control col-sm-3" id="chapter" placeholder="Chaper number"
-                        style="width:20%; margin-bottom:1%;">
-                    <input type="text" class="form-control col-sm-9" id="chapter" placeholder="chapter Name">
-
-                </div>
-            </div> --}}
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10 floatLeft">
