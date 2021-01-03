@@ -73,7 +73,22 @@ class VocabularyExampleController extends Controller
         $vocabulary = VocabularyExample::find($id);
         return view('vocabulary.vocabulary_example_action',['voca'=> new VocabularyExampleResource($vocabulary)]);
     }
+    
+    /* Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getVocabularyEx($id)
+    {
+        $vocabulary = VocabularyExample::where('id', $id)->get();
+        $lstChapter = Vocabulary::find($id);
+        $cate = $lstChapter->cateId;
+        $chapter = $lstChapter->chapter;
+        $chapterName = $lstChapter->chapterName;
 
+        return view('vocabulary.vocabulary_example', ['lstVocabularyEx'=> VocabularyExampleResource::collection($vocabulary), 'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

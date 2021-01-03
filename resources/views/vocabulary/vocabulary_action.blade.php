@@ -34,7 +34,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
+                <select name="chapter_name" id="chapter" class="form-control select2">
                     <option value="{{ $voca->chapter }}" selected="selected">{{ $voca->chapterName }}</option>
                 </select>
             </div>
@@ -103,7 +103,7 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
+                    <select name="chapter_name" id="chapter" class="form-control select2"></select>
                 </div>
             </div>
         </div>

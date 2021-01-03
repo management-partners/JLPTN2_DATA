@@ -9,7 +9,7 @@ class Grammar extends Model
 {
     use HasFactory;
 
-    
+    public $timestamps = false;
     public function getCategoryAttribute()
     {
         switch ($this->cateId) {

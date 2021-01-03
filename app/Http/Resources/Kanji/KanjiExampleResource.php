@@ -16,12 +16,12 @@ class KanjiExampleResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'category'  =>$this->category,
-            'chapterEx'   => $this->chapterEx,
+            'category'  => $this->category,
+            'chapterEx' => $this->chapterEx,
             'content'   => $this->content,
             'onRead'    => $this->onRead,
             'kunRead'   => $this->kunRead,
-            'otherRead' =>$this->otherRead,
+            'otherRead' => $this->otherRead,
             'mean'      => $this->mean,
         ];
     }

@@ -3,15 +3,10 @@
 @section('content')
 <h1> Kanji Example Page </h1>
 
-<div class="create-button">
-    <a href="{{ route('kanji-example.create') }}">
-        <span class="menu-text btn btn-primary"> Create New </span>
-    </a>
-</div>
 <div class="card">
     <div class="card-header"> Filter</div>
     <div class="card-body">
-        <form action="{{ route("kanji.index") }}">
+        <form action="{{ route("kanji-example.index") }}">
             <div class="col-sm-3 float-start">
                 <select name="category" class="form-select" id="category" onChange="this.form.submit()">
                     <option value="1" {{ $searchCate == 1 ? 'selected' : '' }}>新完全マスタ</option>
@@ -21,9 +16,7 @@
             </div>
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
-                    <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-                        
-                    </select>
+                    <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()"></select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
@@ -34,9 +27,13 @@
         </form>
     </div>
 </div>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 @if(isset($lstKanjiEx))
@@ -127,7 +124,7 @@
                     <td>{{ $lst->mean }}</td>
                     <td>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.edit', $lst->id) }}">
+                            <a href="{{ route('kanji-example.show', $lst->id) }}">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
@@ -174,8 +171,9 @@
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
             theme: "classic",
+            allowClear: true,
             ajax: {
-                url: "{{ route("getKanjiChapterExist") }}",
+                url: "{{ route("getKanjiExChapterExist") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {

@@ -22,19 +22,19 @@ use App\Http\Controllers\VocabularyExampleController;
 Route::get('/', function () {
     return view('app');
 });
-Route::Resource('grammar', GrammarController::class);
+Route::resource('grammar', GrammarController::class);
 Route::get('grammar/search/chapter-exist', [GrammarController::class,'getGrammarChapterExist'])->name('getGrammarChapterExist');
 
-Route::Resource('grammar-example', GrammarExampleController::class);
+Route::resource('grammar-example', GrammarExampleController::class);
 Route::get('grammar-example/get-ex/{id}', [GrammarExampleController::class, "showEx"])->name('get-ex');
 Route::get('grammar-example/search/grammar', [GrammarExampleController::class, "getGrammar"])->name('getGrammar');
 Route::get('grammar-example/search/chapter', [GrammarExampleController::class, "getChapterExist"])->name('getChapterExist');
 
 
-Route::Resource('kanji', KanjiController::class);
+Route::resource('kanji', KanjiController::class);
 Route::get('kanji/search/chapter', [KanjiController::class,"getKanjiChapterExist"])->name("getKanjiChapterExist");
 
-Route::Resource('kanji-example', KanjiExampleController::class);
+Route::resource('kanji-example', KanjiExampleController::class);
 Route::get('kanji-example/get-kanji-ex/{id}', [KanjiExampleController::class, "getKanjiEx"])->name('getKanjiEx');
 Route::get('kanji-example/search/chapter', [KanjiExampleController::class,"getKanjiExChapterExist"])->name("getKanjiExChapterExist");
 
@@ -43,3 +43,4 @@ Route::Resource('vocabulary', VocabularyController::class);
 Route::get('vocabulary/search/chapter', [VocabularyController::class,"getVocabularyChapterExist"])->name("getVocabularyChapterExist");
 
 Route::Resource('vocabulary-example', VocabularyExampleController::class);
+Route::get('vocabulary-example/search/{id}', [VocabularyExampleController::class,"getVocabularyEx"])->name('getVocabularyEx');

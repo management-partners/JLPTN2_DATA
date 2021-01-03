@@ -2,39 +2,41 @@
 @section('title', 'Kanji Example Action Page')
 @section('content')
 <h1> Kanji Example Action </h1>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 @if(isset($kanjiEx))
 
-    <form class="action-form" action="{{ route('kanji.update', $kanjiEx->id) }}" action="POST">
+    <form class="action-form" action="{{ route('kanji-example.update', $kanjiEx->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
-            <label for="id" class="col-sm-2 col-form-label">ID</label>
+            <label for="id" class="col-sm-2 col-form-label">Example ID</label>
             <div class="col-sm-10  floatLeft">
-                <label for="" style="padding-right:50px;">{{ $kanjiEx->id }}</label>
-               
+                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
+                <a href="{{ route('kanji-example.edit', $kanjiEx->id) }}" class="btn btn-info">
+                    <i class="fab fa-jira"></i>&nbsp;Create New Example
+                </a>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
-            <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1" {{ $kanjiEx->cateId == 1 ? 'selected' : '' }}>新完全マスタ</option>
-                    <option value="2" {{ $kanjiEx->cateId == 2 ? 'selected' : '' }}>総まとめ</option>
-                    <option value="3" {{ $kanjiEx->cateId == 3 ? 'selected' : '' }}>耳から覚える</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->cateId }}" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->category }}" style="width:80%;" name="cateName">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-6">
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
-                    <option value="{{ $kanjiEx->chapter }}" selected="selected">{{ $kanjiEx->chapterName }}</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->chapterId }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->chapterEx }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
@@ -76,43 +78,32 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('kanji-example.store') }}" action="POST">
+    <form class="action-form" action="{{ route('kanji-example.store') }}" method="POST">
+        @method('POST')
         @csrf
         <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
+            <div class="col-sm-10" id="kanji">
+                <input type="text" class="form-control-plaintext" name="kanji" disable value="{{ $edit->id }}" />
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
-            <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1">新完全マスタ</option>
-                    <option value="2">総まとめ</option>
-                    <option value="3">耳から覚える</option>
-                </select>
+            <div class="col-sm-10">
+                <label for="" style="padding-right:50px;">{{ $edit->cateId }}</label>
+                <label for="" style="padding-right:50px;">{{ $edit->category }}</label>
+
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-10 floatLeft">
-                <div class="col-sm-2 floatLeft">
-                    <input class="form-check-input" type="checkbox" value="" id="newChapter">
-                    <label class="form-check-label" for="newChapter">
-                        New Chapter
-                    </label>
-                </div>
-                <div id="new" class="col-auto">
-                    <div class="col-sm-2 float-start">
-                        <input type="text" class="form-control" name="chapter" placeholder="chapter" style="margin-bottom:5px;">
-                    </div>
-                    <div class="col-sm-10 float-end">
-                        <input type="text" class="form-control col-sm-10" name="chapter_name" placeholder="Chapter Name">
-                    </div>
-
-                </div>
-                <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
-                </div>
+            <div class="col-sm-10">
+                <label for="" style="padding-right:50px;">{{ $edit->chapter }}</label>
+                <label for="" style="padding-right:50px;">{{ $edit->chapterName }}</label>
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
+            <label for="structsControl" class="col-sm-2 col-form-label">Kanji Example</label>
             <div class="col-sm-10" id="kanji">
                 <input type="text" class="form-control" name="kanji" placeholder="Kanji word" />
             </div>

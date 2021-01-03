@@ -9,6 +9,7 @@ use App\Models\Kanji;
 class KanjiExample extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     public function getCategoryAttribute()
     {
         switch ($this->cateId) {

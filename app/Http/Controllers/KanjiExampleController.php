@@ -23,17 +23,18 @@ class KanjiExampleController extends Controller
         $chapterName = '';
         $lstKaniEx = [];
         if (isset($search) && $search != 0 && isset($cate)) {
-            $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $search)->get();
+            $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapterId', $search)->get();
             $chapter = $search;
             $chapterName = Kanji::where('chapter', $search)->get('chapterName')->first()->chapterName;
+           
         } elseif (isset($search) && $search != 0) {
-            $lstKaniEx = KanjiExample::where('chapter',$search)->get();
+            $lstKaniEx = KanjiExample::where('chapterId',$search)->get();
             $chapter = $search;
             $chapterName = Kanji::where('chapter', $search)->get('chapterName')->first()->chapterName;
         } elseif (isset($cate)) {
-            $lstKaniEx = Kanji::where('cateId', $cate)->get();
+            $lstKaniEx = KanjiExample::where('cateId', $cate)->get();
         } else {
-            $lstKaniEx = Kanji::where('cateId', 1)->get();
+            $lstKaniEx = KanjiExample::where('cateId', 1)->get();
             $cate = 1;
         }
         
@@ -58,7 +59,21 @@ class KanjiExampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kanjiExample = new KanjiExample();
+        $kanjiExample->id           = $request->id;
+        $kanjiExample->cateId       = $request->cateId;
+        $kanjiExample->chapterId    = $request->chapter;
+        $kanjiExample->content      = $request->content;
+        $kanjiExample->onRead       = $request->onRead;
+        $kanjiExample->kunRead      = $request->kunRead;
+        $kanjiExample->otherRead    = $request->otherRead;
+        $kanjiExample->mean         = $request->mean;
+        $result = $kanjiExample -> save();
+        if ($result) {
+            \Session::flash('success', 'Kanji example successfully created.');
+        } else {
+            \Session::flash('fail', 'Kanji example unsuccessfully created.');
+        }
     }
 
     /**
@@ -80,8 +95,13 @@ class KanjiExampleController extends Controller
      */
     public function getKanjiEx($id)
     {
-        $kanjiEx = KanjiExample::where('id', $id)-> get();
-        return view('kanji.kanji_example', ['lstKanji'=> KanjiExampleResource::collection($kanjiEx)]);
+        $kanjiEx = KanjiExample::where('kanjiId',$id)->get();
+        $lstChapter = Kanji::find($id);
+        $cate = $lstChapter->cateId;
+        $chapter = $lstChapter->chapter;
+        $chapterName = $lstChapter->chapterName;
+
+        return view('kanji.kanji_example', ['lstKanji'=> KanjiExampleResource::collection($kanjiEx), 'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName]);
     }
 
     /**
@@ -111,7 +131,9 @@ class KanjiExampleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kanji = Kanji::find($id);
+        return view('kanji.kanji_example_action',['edit'=> new KanjiExampleResource($kanji)]);
+        
     }
 
     /**
@@ -123,7 +145,23 @@ class KanjiExampleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kanjiExample = KanjiExample::find($id);
+        $kanjiExample->kanjiId      = $request->id;
+        $kanjiExample->cateId       = $request->cateId;
+        $kanjiExample->chapterId    = $request->chapter;
+        $kanjiExample->content      = $request->content;
+        $kanjiExample->onRead       = $request->onRead;
+        $kanjiExample->kunRead      = $request->kunRead;
+        $kanjiExample->otherRead    = $request->otherRead;
+        $kanjiExample->mean         = $request->mean;
+
+        $result = $kanjiExample -> update();
+        if ($result) {
+            \Session::flash('success', 'Kanji example successfully updated.');
+        } else {
+            \Session::flash('fail', 'Kanji example unsuccessfully updated.');
+        }
+        
     }
 
     /**
@@ -134,6 +172,13 @@ class KanjiExampleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kanji = KanjiExample::find($id);
+        $result = $kanji->delete();
+        if ($result) {
+            \Session::flash('success', 'Kanji example successfully deleted.');
+            return redirect()->route('kanji-example.index');
+        } else {
+            \Session::flash('fail', 'Kanji example unsuccessfully deleted.');
+        }
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GrammarExample extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     public function getCateAttribute(){
         switch ($this->category) {
             case 1:

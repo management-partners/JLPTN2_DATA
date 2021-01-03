@@ -2,23 +2,30 @@
 @section('title', 'Kanji Action Page')
 @section('content')
 <h1> Kanji Action </h1>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 @if(isset($kanji))
 
-    <form class="action-form" action="{{ route('kanji.update', $kanji->id) }}" action="POST">
+    <form class="action-form" action="/kanji/{{$kanji->id}}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
             <label for="id" class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $kanji->id }}</label>
-                <a href="{{ route('getKanjiEx', $kanji->exampleId) }}">
-                    Example
-                </a>
+                @if ($kanji->exampleId != 0)
+                    <a href="{{ route('getKanjiEx', $kanji->exampleId) }}">
+                        Example
+                    </a>
+                @endif
+                
             </div>
         </div>
         <div class="mb-3 row">
@@ -34,7 +41,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
+                <select name="chapter_name" id="chapter" class="form-control select2">
                     <option value="{{ $kanji->chapter }}" selected="selected">{{ $kanji->chapterName }}</option>
                 </select>
             </div>
@@ -78,7 +85,8 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('kanji.store') }}" action="POST">
+    <form class="action-form" action="/kanji" method="POST">
+        @method('POST')
         @csrf
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
@@ -109,7 +117,7 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
+                    <select name="chapter_name" id="chapter" class="form-control select2"></select>
                 </div>
             </div>
         </div>

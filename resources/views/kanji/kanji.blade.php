@@ -21,7 +21,7 @@
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-                        
+
                     </select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
@@ -33,9 +33,13 @@
         </form>
     </div>
 </div>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 <table class="table table-striped table-hover">
@@ -49,7 +53,7 @@
             <th scope="col">Kun Read</th>
             <th scope="col">Other Read</th>
             <th scope="col">Mean</th>
-            <th scope="col" style="width:8%">Action</th>
+            <th scope="col" style="width:15%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -62,23 +66,40 @@
                     <a href="{{ URL::route('kanji.show', $lst->id) }}">
                         {{ $lst->kanji }}
                     </a>
-
                 </td>
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->kunRead }}</td>
                 <td>{{ $lst->otherRead }}</td>
                 <td>{{ $lst->mean }}</td>
                 <td>
+                    <div class="action-example">
+                        @if ($lst->exampleId == 0)
+                        <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fab fa-jira"></i>
+                            </button>
+                        </form>
+                        @else
+                        <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-info">
+                                <i class="fab fa-jira"></i>
+                            </button>
+                        </form>
+                        @endif
+                        
+                    </div>
                     <div class="action-edit">
-                        <a href="{{ route('kanji.edit', $lst->id) }}">
+                        <a href="{{ route('kanji.show', $lst->id) }}">
                             <i class="fas fa-pen-square fa-3x"></i>
                         </a>
                     </div>
                     <div class="action-delete">
-                        <form action="{{ route('kanji.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                        <form action="{{ route('kanji.destroy', $lst->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
-                            <button class="btn btn-danger">
+                            <button type="submit" class="btn btn-danger" onClick="return confirm('Do you want delete?')">
                                 <i class="fas fa-trash-alt "></i>
                             </button>
                         </form>
@@ -98,7 +119,7 @@
         $('#chapter').select2({
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
-             allowClear: true,
+            allowClear: true,
             theme: "classic",
             ajax: {
                 url: "{{ route("getKanjiChapterExist") }}",
