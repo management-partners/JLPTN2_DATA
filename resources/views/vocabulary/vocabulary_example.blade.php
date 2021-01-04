@@ -2,11 +2,6 @@
 @section('title', 'Vocabulary Example Page')
 @section('content')
     <h1> Vocabulary Example Page </h1>
-<div class="create-button">
-    <a href="{{ route('vocabulary-example.create') }}">
-        <span class="menu-text btn btn-primary"> Create New </span>
-    </a>
-</div>
 <div class="card">
     <div class="card-header"> Filter</div>
     <div class="card-body">

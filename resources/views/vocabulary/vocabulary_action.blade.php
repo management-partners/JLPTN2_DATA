@@ -2,14 +2,18 @@
 @section('title', 'Vocabulary Action Page')
 @section('content')
 <h1> Vocabulary Action </h1>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 @if(isset($voca))
 
-    <form class="action-form" action="{{ route('vocabulary.update', $voca->id) }}" action="POST">
+    <form class="action-form" action="{{ route('vocabulary.update', $voca->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
@@ -34,15 +38,10 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter_name" id="chapter" class="form-control select2">
+                <select name="chapter" id="chapter" class="form-control select2">
                     <option value="{{ $voca->chapter }}" selected="selected">{{ $voca->chapterName }}</option>
                 </select>
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="structsControl" class="col-sm-2 col-form-label">Lesson</label>
-            <div class="col-sm-2" id="kanji">
-                <input type="text" class="form-control" name="lesson" value="{{ $voca->lesson }}" />
+                <input type="hidden" id="chapter_name" name="chapter_name">
             </div>
         </div>
         <div class="mb-3 row">
@@ -72,7 +71,8 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('vocabulary.store') }}" action="POST">
+    <form class="action-form" action="{{ route('vocabulary.store') }}" method="POST">
+        @method('POST')
         @csrf
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
@@ -103,38 +103,27 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name" id="chapter" class="form-control select2"></select>
+                    <select name="chapter" id="chapter" class="form-control select2"></select>
+                    <input type="hidden" id="chapter_name" name="chapter_name">
                 </div>
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
+            <label for="structsControl" class="col-sm-2 col-form-label">Vocabulary</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" placeholder="Kanji word" />
+                <input type="text" class="form-control" name="vocabulary" placeholder="Vocabulary word" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">On Read</label>
             <div class="col-sm-10" id="useControl">
-                <input type="text" class="form-control" name="onRead" placeholder="Onyomi read" />
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="meanControl" class="col-sm-2 col-form-label">Kun Read</label>
-            <div class="col-sm-10" id="meanControl">
-                <input type="text" class="form-control" name="kunRead" placeholder="Kunyomi read" />
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="descriptionControl" class="col-sm-2 col-form-label">Other Read</label>
-            <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="otherRead" placeholder="other read" />
+                <input type="text" class="form-control" name="onRead" placeholder="Read" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="descriptionControl" class="col-sm-2 col-form-label">Mean</label>
             <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="mean" placeholder="Kanji mean" />
+                <input type="text" class="form-control" name="mean" placeholder="Vocabulary mean" />
             </div>
         </div>
         <div class="mb-3 row">
@@ -192,6 +181,8 @@
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

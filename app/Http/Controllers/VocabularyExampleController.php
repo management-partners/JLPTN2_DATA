@@ -120,6 +120,13 @@ class VocabularyExampleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $voca = VocabularyExample::find($id);
+        $result = $voca->delete();
+        if ($result) {
+            \Session::flash('success', 'Vocabulary example successfully deleted.');
+            return redirect()->route('vocabulary-example.index');
+        } else {
+            \Session::flash('fail', 'Vocabulary example unsuccessfully deleted.');
+        }
     }
 }

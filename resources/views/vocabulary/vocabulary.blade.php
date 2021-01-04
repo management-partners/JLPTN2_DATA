@@ -11,7 +11,7 @@
     <div class="card-header"> Filter</div>
     <div class="card-body">
         <form action="{{ route("vocabulary.index") }}">
-            <div class="col-sm-5 float-start">
+            <div class="col-sm-3 float-start">
                 <select name="category" class="form-select" id="category" onChange="this.form.submit()">
                     <option value="1" {{ $searchCate == 1 ? 'selected' : '' }}>新完全マスタ</option>
                     <option value="2" {{ $searchCate == 2 ? 'selected' : '' }}>総まとめ</option>
@@ -27,15 +27,20 @@
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
                     </select>
+                    
                 @endif
 
             </div>
         </form>
     </div>
 </div>
-@if(Session::has('flash_message'))
+@if(Session::has('success'))
     <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+        {{ Session::get('success') }}
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger">
+        {{ Session::get('fail') }}
     </div>
 @endif
 <table class="table table-striped table-hover">
@@ -44,11 +49,10 @@
             <th scope="col">ID</th>
             <th scope="col">Category</th>
             <th scope="col">Chapter</th>
-            <th scope="col">Lesson</th>
             <th scope="col">Vocabulary</th>
             <th scope="col"> Read</th>
             <th scope="col">Mean</th>
-            <th scope="col" style="width:8%">Action</th>
+            <th scope="col" style="width:12%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -57,7 +61,6 @@
                 <td>{{ $lst->id }}</td>
                 <td>{{ $lst->category }}</td>
                 <td>{{ $lst->chapterName }}</td>
-                <td>{{ $lst->lesson }}</td>
                 <td>
                     <a href="{{ URL::route('vocabulary.show', $lst->id) }}">
                         {{ $lst->vocabulary }}
@@ -67,16 +70,33 @@
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->mean }}</td>
                 <td>
+                    <div class="action-example">
+                        @if ($lst->exampleId == 0)
+                        <form action="{{ route('vocabulary-example.edit', $lst->id) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                        @else
+                        <form action="{{ route('getVocabularyEx', $lst->id) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
+                                <i class="fas fa-stream"></i>
+                            </button>
+                        </form>
+                        @endif
+                    </div>
                     <div class="action-edit">
-                        <a href="{{ route('vocabulary.edit', $lst->id) }}">
+                        <a href="{{ route('vocabulary.edit', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Kanji">
                             <i class="fas fa-pen-square fa-3x"></i>
                         </a>
                     </div>
                     <div class="action-delete">
-                        <form action="{{ route('vocabulary.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                        <form action="{{ route('vocabulary.destroy', $lst->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
-                            <button class="btn btn-danger">
+                            <button class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Kanji">
                                 <i class="fas fa-trash-alt "></i>
                             </button>
                         </form>
@@ -99,7 +119,7 @@
              allowClear: true,
             theme: "classic",
             ajax: {
-                url: "{{ route("getKanjiChapterExist") }}",
+                url: "{{ route("getVocabularyChapterExist") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {

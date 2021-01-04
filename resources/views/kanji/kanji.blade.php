@@ -77,14 +77,14 @@
                         <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
-                                <i class="fab fa-jira"></i>
+                                <i class="fas fa-plus"></i>
                             </button>
                         </form>
                         @else
                         <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
-                                <i class="fab fa-jira"></i>
+                                <i class="fas fa-stream"></i>
                             </button>
                         </form>
                         @endif

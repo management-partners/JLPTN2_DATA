@@ -21,7 +21,7 @@ class KanjiExampleController extends Controller
         $search = $request->chapter;
         $cate = $request->category;
         $kanjiId = $request->kanjiId;
-        $chapter = 0;
+        $chapter = null;
         $chapterName = '';
         $lstKaniEx = [];
         if (isset($cate)) {

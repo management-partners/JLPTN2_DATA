@@ -85,7 +85,7 @@
                                 @method("GET")
                                 @csrf
                                 <button type="submit" class="btn btn-warning">
-                                    <i class="fab fa-jira"></i>
+                                    <i class="fas fa-plus"></i>
                                 </button>
                             </form>
 

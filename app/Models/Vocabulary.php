@@ -9,6 +9,7 @@ class Vocabulary extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $guarded = [];  
     public function getCategoryAttribute()
     {
         switch ($this->cateId) {

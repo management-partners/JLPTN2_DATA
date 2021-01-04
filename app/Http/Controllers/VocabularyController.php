@@ -18,7 +18,7 @@ class VocabularyController extends Controller
     {
         $search = $request->chapter;
         $cate = $request->category;
-        $chapter = 0;
+        $chapter = null;
         $chapterName = '';
         $vocabulary = [];
         if (isset($search) && $search != 0 && isset($cate)) {
@@ -57,6 +57,24 @@ class VocabularyController extends Controller
      */
     public function store(Request $request)
     {
+        $voca = Vocabulary::create([
+                'cateId'        => $request->category,
+                'chapter'       => $request->chapter,
+                'exampleId'     => 0,
+                'chapterName'   => $request->chapter_name,
+                'vocabulary'    => $request->vocabulary,
+                'onRead'        => $request->onRead,
+                'mean'          => $request->mean,
+                'isolation'     => 0,
+            ]);
+        if ($voca) {
+            \Session::flash('success', 'Vocabulary successfully created.');
+        } else {
+            \Session::flash('fail', 'Vocabulary unsuccessfully created.');
+        }
+
+        return redirect()->route('vocabulary.index');
+
     }
 
     /**
@@ -68,10 +86,10 @@ class VocabularyController extends Controller
      */
     public function show($id)
     {
-         $vocabulary = Vocabulary::find($id);
+        $vocabulary = Vocabulary::find($id);
         return view('vocabulary.vocabulary_action',['voca'=> new VocabularyResource($vocabulary)]);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -100,6 +118,8 @@ class VocabularyController extends Controller
      */
     public function edit($id)
     {
+        $vocabulary = Vocabulary::find($id);
+        return view('vocabulary.vocabulary_action',['voca'=> new VocabularyResource($vocabulary)]);
     }
 
     /**
@@ -111,6 +131,22 @@ class VocabularyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $voca = Vocabulary::find($id);
+        $voca = $voca -> update([
+                'cateId'        => $request->category,
+                'chapter'       => $request->chapter,
+                'chapterName'   => $request->chapter_name,
+                'vocabulary'    => $request->vocabulary,
+                'onRead'        => $request->onRead,
+                'mean'          => $request->mean,
+            ]);
+        if ($voca) {
+            \Session::flash('success', 'Vocabulary successfully updated.');
+        } else {
+            \Session::flash('fail', 'Vocabulary unsuccessfully updated.');
+        }
+
+        return redirect()->route('vocabulary.index');
     }
 
     /**
@@ -122,5 +158,13 @@ class VocabularyController extends Controller
      */
     public function destroy($id)
     {
+        $voca = Vocabulary::find($id);
+        $result = $voca->delete();
+        if ($result) {
+            \Session::flash('success', 'Vocabulary successfully deleted.');
+            return redirect()->route('vocabulary.index');
+        } else {
+            \Session::flash('fail', 'Vocabulary unsuccessfully deleted.');
+        }
     }
 }
