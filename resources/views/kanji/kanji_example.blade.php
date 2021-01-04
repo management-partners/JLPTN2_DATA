@@ -24,6 +24,16 @@
                 @endif
 
             </div>
+            <div class="col-sm-3 float-start space-chapter">
+                @if(!isset($searchKanji))
+                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()"></select>
+                @else
+                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()">
+                        <option value="{{ $searchKanji }}" selected="selected">{{ $searchKanjiName }}</option>
+                    </select>
+                @endif
+
+            </div>
         </form>
     </div>
 </div>
@@ -48,7 +58,7 @@
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col">Action</th>
+                <th scope="col" style="width:12%">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -69,8 +79,19 @@
                     <td>{{ $lst->otherRead }}</td>
                     <td>{{ $lst->mean }}</td>
                     <td>
+                        <div class="action-example">
+                            <form action="{{ route('kanji-example.create') }}" method="POST">
+                                <input type="hidden" name="kanjiId" value="{{ $lst->kanjiId }}">
+                                @method("GET")
+                                @csrf
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fab fa-jira"></i>
+                                </button>
+                            </form>
+
+                        </div>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.edit', $lst->id) }}">
+                            <a href="{{ route('kanji-example.show', $lst->id) }}">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
@@ -102,7 +123,7 @@
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col" style="width:8%">Action</th>
+                <th scope="col" style="width:12%">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -123,6 +144,17 @@
                     <td>{{ $lst->otherRead }}</td>
                     <td>{{ $lst->mean }}</td>
                     <td>
+                        <div class="action-example">
+                           <form action="{{ route('kanji-example.create') }}" method="POST">
+                                <input type="hidden" name="kanjiId" value="{{ $lst->kanjiId }}">
+                                @method("GET")
+                                @csrf
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fab fa-jira"></i>
+                                </button>
+                            </form>
+
+                        </div>
                         <div class="action-edit">
                             <a href="{{ route('kanji-example.show', $lst->id) }}">
                                 <i class="fas fa-pen-square fa-3x"></i>
@@ -179,6 +211,38 @@
                     var query = {
                         key: params.term,
                         cate: $("#category").val(),
+                        type: 'public'
+                    }
+
+                    // Query parameters will be ?key=[term]&type=public
+                    return query;
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('#kanjiId').select2({
+            placeholder: "Choose chapter...",
+            minimumInputLength: 0,
+            theme: "classic",
+            allowClear: true,
+            ajax: {
+                url: "{{ route("getKanjiExist") }}",
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        key: params.term,
+                        cate: $("#category").val(),
+                        chapter: $("#chapter").val(),
                         type: 'public'
                     }
 

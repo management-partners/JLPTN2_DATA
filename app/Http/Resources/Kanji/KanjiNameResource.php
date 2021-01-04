@@ -4,7 +4,7 @@ namespace App\Http\Resources\Kanji;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class KanjiChapterResource extends JsonResource
+class KanjiNameResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,8 @@ class KanjiChapterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'     => $this->chapter,
-            'text'   => $this->chapterName,
+            'id'    => $this->id,
+            'text' => $this->kanji,
         ];
     }
 }

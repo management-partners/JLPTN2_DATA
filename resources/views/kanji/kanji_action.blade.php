@@ -13,7 +13,7 @@
 @endif
 @if(isset($kanji))
 
-    <form class="action-form" action="/kanji/{{$kanji->id}}" method="POST">
+    <form class="action-form" action="{{route('kanji.update',$kanji->id)}}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
@@ -85,7 +85,7 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="/kanji" method="POST">
+    <form class="action-form" action="{{route('kanji.store')}}" method="POST">
         @method('POST')
         @csrf
         <div class="mb-3 row">

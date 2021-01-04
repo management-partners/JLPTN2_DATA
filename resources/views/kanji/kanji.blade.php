@@ -76,14 +76,14 @@
                         @if ($lst->exampleId == 0)
                         <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
                             @csrf
-                            <button type="submit" class="btn btn-warning">
+                            <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
                                 <i class="fab fa-jira"></i>
                             </button>
                         </form>
                         @else
                         <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
                             @csrf
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
                                 <i class="fab fa-jira"></i>
                             </button>
                         </form>
@@ -91,7 +91,7 @@
                         
                     </div>
                     <div class="action-edit">
-                        <a href="{{ route('kanji.show', $lst->id) }}">
+                        <a href="{{ route('kanji.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji">
                             <i class="fas fa-pen-square fa-3x"></i>
                         </a>
                     </div>
@@ -99,7 +99,7 @@
                         <form action="{{ route('kanji.destroy', $lst->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
-                            <button type="submit" class="btn btn-danger" onClick="return confirm('Do you want delete?')">
+                            <button type="submit" class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Kanji">
                                 <i class="fas fa-trash-alt "></i>
                             </button>
                         </form>

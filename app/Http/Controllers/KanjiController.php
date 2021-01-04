@@ -58,13 +58,18 @@ class KanjiController extends Controller
      */
     public function store(Request $request)
     {
-        $chapterN = Kanji::where('chapter', $request->chapter_name)->get('chapterName')->first()->chapterName;
-        $chapter = $request->chapter_name;
+        $chapterN = Kanji::where('chapter', $request->chapter_name)->get('chapterName')->first();
+        $tempChapterName = '';
+        if(isset($chapterN)){
+            $tempChapterName = $chapterN->chapterName;
+        }else{
+            $tempChapterName = $request->chapter_name;
+        }
         $kanji = new Kanji();
         $kanji->cateId      = $request->category;
         $kanji->exampleId   = 0;
-        $kanji->chapter     = $chapter;
-        $kanji->chapterName = $chapterN;
+        $kanji->chapter     = $request->chapter;
+        $kanji->chapterName = $tempChapterName;
         $kanji->kanji       = $request->kanji;
         $kanji->onRead      = $request->onRead;
         $kanji->kunRead     = $request->kunReadd;
@@ -75,11 +80,11 @@ class KanjiController extends Controller
         
         if ($result) {
             \Session::flash('success', 'Kanji successfully created.');
-             return redirect()->route('kanji.index');
+             
         } else {
             \Session::flash('fail', 'Kanji unsuccessfully created.');
         }
-        
+        return redirect()->route('kanji.index');
     }
 
     /**

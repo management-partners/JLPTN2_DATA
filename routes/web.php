@@ -34,10 +34,11 @@ Route::get('grammar-example/search/chapter', [GrammarExampleController::class, "
 Route::resource('kanji', KanjiController::class);
 Route::get('kanji/search/chapter', [KanjiController::class,"getKanjiChapterExist"])->name("getKanjiChapterExist");
 
+
 Route::resource('kanji-example', KanjiExampleController::class);
 Route::get('kanji-example/get-kanji-ex/{id}', [KanjiExampleController::class, "getKanjiEx"])->name('getKanjiEx');
 Route::get('kanji-example/search/chapter', [KanjiExampleController::class,"getKanjiExChapterExist"])->name("getKanjiExChapterExist");
-
+Route::get('kanji/search/kanji', [KanjiExampleController::class,"getKanjiExist"])->name("getKanjiExist");
 
 Route::Resource('vocabulary', VocabularyController::class);
 Route::get('vocabulary/search/chapter', [VocabularyController::class,"getVocabularyChapterExist"])->name("getVocabularyChapterExist");

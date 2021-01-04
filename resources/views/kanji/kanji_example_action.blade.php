@@ -19,24 +19,22 @@
         <div class="mb-3 row">
             <label for="id" class="col-sm-2 col-form-label">Example ID</label>
             <div class="col-sm-10  floatLeft">
-                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
-                <a href="{{ route('kanji-example.edit', $kanjiEx->id) }}" class="btn btn-info">
-                    <i class="fab fa-jira"></i>&nbsp;Create New Example
-                </a>
+                <input type="text" class="form-control-plaintext float-start" readonly  value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
+               
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->cateId }}" style="width:10%;" name="cateId">
-                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->category }}" style="width:80%;" name="cateName">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->cateId }}" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->category }}" style="width:80%;" name="cateName">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->chapterId }}" style="width:10%;" name="chapter">
-                <input type="text" class="form-control-plaintext float-start" disabled value="{{ $kanjiEx->chapterEx }}" style="width:80%;" name="chapterName">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapterId }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapterEx }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
@@ -84,22 +82,22 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control-plaintext" name="kanji" disable value="{{ $edit->id }}" />
+                <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-10">
-                <label for="" style="padding-right:50px;">{{ $edit->cateId }}</label>
-                <label for="" style="padding-right:50px;">{{ $edit->category }}</label>
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->cateId }}" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->category }}" style="width:80%;" name="cateName">
 
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10">
-                <label for="" style="padding-right:50px;">{{ $edit->chapter }}</label>
-                <label for="" style="padding-right:50px;">{{ $edit->chapterName }}</label>
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterId }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterEx }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
