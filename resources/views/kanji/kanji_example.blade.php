@@ -66,7 +66,7 @@
                 <tr>
                     <td>{{ $lst->id }}</td>
                     <td>{{ $lst->category }}</td>
-                    <td>{{ $lst->chapterEx }}</td>
+                    <td>{{ $lst->chapterName }}</td>
                     <td>
                         <a href="{{ route('kanji-example.show', $lst->id) }}">
                             {{ $lst->content }}
@@ -131,7 +131,7 @@
                 <tr>
                     <td>{{ $lst->id }}</td>
                     <td>{{ $lst->category }}</td>
-                    <td>{{ $lst->chapterEx }}</td>
+                    <td>{{ $lst->chapterName }}</td>
                     <td>
                         <a href="{{ route('kanji-example.show', $lst->id) }}">
                             {{ $lst->content }}
@@ -231,7 +231,7 @@
     $(document).ready(function() {
 
         $('#kanjiId').select2({
-            placeholder: "Choose chapter...",
+            placeholder: "Choose kanji...",
             minimumInputLength: 0,
             theme: "classic",
             allowClear: true,

@@ -40,7 +40,7 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" value="{{ $kanjiEx->kanji }}" />
+                <input type="text" class="form-control" name="kanji" value="{{ $kanjiEx->kanji?$kanjiEx->kanji:$kanjiEx->content }}" />
             </div>
         </div>
         <div class="mb-3 row">
@@ -96,8 +96,8 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterId }}" style="width:10%;" name="chapter">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterEx }}" style="width:80%;" name="chapterName">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapter }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterEx?$edit->chapterEx:$edit->chapterName }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">

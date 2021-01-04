@@ -25,8 +25,8 @@ class KanjiExample extends Model
 
         }
     }
-    public function getChapterExAttribute()
+    public function getChapterNameAttribute()
     {
-        return Kanji::where('chapter',$this->chapterId)->groupBy('chapter')->get('chapterName')[0]['chapterName'];
+        return Kanji::where('chapter', $this->chapter)->get('chapterName')->first()['chapterName'];
     }
 }
