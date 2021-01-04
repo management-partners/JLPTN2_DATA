@@ -35,6 +35,9 @@ class KanjiExampleController extends Controller
                 $chapterName = Kanji::where('chapter', $search)->get('chapterName')->first()->chapterName;
             } elseif ($cate != 0 && $kanjiId != 0) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->where('kanjiId', $kanjiId)->get();
+            }else {
+                $lstKaniEx = KanjiExample::where('cateId', 1)->get();
+                $cate = 1;
             }
         } else {
             $lstKaniEx = KanjiExample::where('cateId', 1)->get();
