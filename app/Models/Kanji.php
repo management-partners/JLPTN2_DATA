@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kanji extends Model
 {
-    public $timestamps = false;
+    
     use HasFactory;
+    public $timestamps = false;
+    protected $guarded = []; 
     public function getCategoryAttribute()
     {
         switch ($this->cateId) {

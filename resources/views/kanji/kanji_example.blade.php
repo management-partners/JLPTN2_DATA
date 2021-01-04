@@ -38,12 +38,14 @@
     </div>
 </div>
 @if(Session::has('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ Session::get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @elseif(Session::has('fail'))
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ Session::get('fail') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 @if(isset($lstKanjiEx))
@@ -84,22 +86,22 @@
                                 <input type="hidden" name="kanjiId" value="{{ $lst->kanjiId }}">
                                 @method("GET")
                                 @csrf
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" class="btn btn-warning"  data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </form>
 
                         </div>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.show', $lst->id) }}">
+                            <a href="{{ route('kanji-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Kanji example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST">
                                 @method("DELETE")
                                 @csrf
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete kanji example">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
@@ -149,22 +151,22 @@
                                 <input type="hidden" name="kanjiId" value="{{ $lst->kanjiId }}">
                                 @method("GET")
                                 @csrf
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Kanji example">
                                     <i class="fab fa-jira"></i>
                                 </button>
                             </form>
 
                         </div>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.show', $lst->id) }}">
+                            <a href="{{ route('kanji-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST" >
                                 @method("DELETE")
                                 @csrf
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger"  onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete kanji example">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

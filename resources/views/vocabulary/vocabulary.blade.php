@@ -21,13 +21,13 @@
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-                        
+
                     </select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
                     </select>
-                    
+
                 @endif
 
             </div>
@@ -35,12 +35,14 @@
     </div>
 </div>
 @if(Session::has('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ Session::get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @elseif(Session::has('fail'))
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ Session::get('fail') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 <table class="table table-striped table-hover">
@@ -71,20 +73,31 @@
                 <td>{{ $lst->mean }}</td>
                 <td>
                     <div class="action-example">
-                        @if ($lst->exampleId == 0)
-                        <form action="{{ route('vocabulary-example.edit', $lst->id) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
+                        @if($lst->exampleId == 0)
+                            <form action="{{ route('vocabulary-example.create', $lst->id) }}" method="GET">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $lst->id }}">
+                                <input type="hidden" name="cateId" value="{{ $lst->cateId }}">
+                                <input type="hidden" name="cateName" value="{{ $lst->category }}">
+                                <input type="hidden" name="chapter" value="{{ $lst->chapter }}">
+                                <input type="hidden" name="chapterName" value="{{ $lst->chapterName }}">
+
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         @else
-                        <form action="{{ route('getVocabularyEx', $lst->id) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
-                                <i class="fas fa-stream"></i>
-                            </button>
-                        </form>
+                            <form action="{{ route('getVocabularyEx', $lst->id) }}" method="GET">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $lst->id }}">
+                                <input type="hidden" name="cateId" value="{{ $lst->cateId }}">
+                                <input type="hidden" name="cateName" value="{{ $lst->category }}">
+                                <input type="hidden" name="chapter" value="{{ $lst->chapter }}">
+                                <input type="hidden" name="chapterName" value="{{ $lst->chapterName }}">
+                                <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
+                                    <i class="fas fa-stream"></i>
+                                </button>
+                            </form>
                         @endif
                     </div>
                     <div class="action-edit">
@@ -116,7 +129,7 @@
         $('#chapter').select2({
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
-             allowClear: true,
+            allowClear: true,
             theme: "classic",
             ajax: {
                 url: "{{ route("getVocabularyChapterExist") }}",

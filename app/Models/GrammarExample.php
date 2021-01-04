@@ -9,6 +9,7 @@ class GrammarExample extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $guarded = []; 
     public function getCateAttribute(){
         switch ($this->category) {
             case 1:

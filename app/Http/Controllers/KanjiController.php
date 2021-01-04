@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Kanji\KanjiChapterResource;
 use App\Http\Resources\Kanji\KanjiResource;
 use App\Models\Kanji;
+use App\Models\KanjiExample;
 use Illuminate\Http\Request;
 
 class KanjiController extends Controller
@@ -174,6 +175,7 @@ class KanjiController extends Controller
     public function destroy($id)
     {
         $kanji = Kanji::find($id);
+        $kanjiEx = KanjiExample::where('kanjiId', $id)->delete();
         $result = $kanji->delete();
         if ($result) {
             \Session::flash('success', 'Kanji successfully deleted.');

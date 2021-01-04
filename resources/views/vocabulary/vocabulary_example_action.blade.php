@@ -9,7 +9,7 @@
 @endif
 @if(isset($voca))
 
-    <form class="action-form" action="{{ route('vocabulary-example.update', $voca->id) }}" action="POST">
+    <form class="action-form" action="{{ route('vocabulary-example.update', $voca->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
@@ -31,9 +31,10 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
+                <select name="chapter" id="chapter" class="form-control select2">
                     <option value="{{ $voca->chapter }}" selected="selected">{{ $voca->chapterEx }}</option>
                 </select>
+                <input type="hidden" name="chapter_name" id="chapter_name">
             </div>
         </div>
         <div class="mb-3 row">
@@ -63,39 +64,28 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('vocabulary-example.store') }}" action="POST">
+    <form class="action-form" action="{{ route('vocabulary-example.store') }}" method="POST">
         @csrf
+        
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Vocabulary ID</label>
+            <div class="col-sm-10" id="vocaId">
+                <input type="text" class="form-control-plaintext" name="vocaId" readonly value="{{ $fixId }}" />
+            </div>
+        </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
-            <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1">新完全マスタ</option>
-                    <option value="2">総まとめ</option>
-                    <option value="3">耳から覚える</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $fixCate[0]}}" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $fixCate[1] }}" style="width:80%;" name="cateName">
+
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-10 floatLeft">
-                <div class="col-sm-2 floatLeft">
-                    <input class="form-check-input" type="checkbox" value="" id="newChapter">
-                    <label class="form-check-label" for="newChapter">
-                        New Chapter
-                    </label>
-                </div>
-                <div id="new" class="col-auto">
-                    <div class="col-sm-2 float-start">
-                        <input type="text" class="form-control" placeholder="chapter" name="chapter" style="margin-bottom:5px;">
-                    </div>
-                    <div class="col-sm-9 float-start" style="margin-left:5px;">
-                        <input type="text" class="form-control" name="chapter_name" placeholder="Chapter Name">
-                    </div>
-
-                </div>
-                <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
-                </div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $fixChapter[0] }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $fixChapter[1] }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
@@ -170,6 +160,8 @@
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

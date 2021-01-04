@@ -219,8 +219,16 @@ class KanjiExampleController extends Controller
      */
     public function destroy($id)
     {
-        $kanji = KanjiExample::find($id);
-        $result = $kanji->delete();
+        $kanjiEx = KanjiExample::find($id);
+        $countEx = KanjiExample::where('kanjiId', $kanjiEx->kanjiId)->count('kanjiId');
+        if($countEx == 1){
+            $examplId = Kanji::find($kanjiEx->kanjiId);
+            $examplId->update([
+                'exampleId' => 0,
+            ]);
+        }
+        $result = $kanjiEx->delete();
+
         if ($result) {
             \Session::flash('success', 'Kanji example successfully deleted.');
 
