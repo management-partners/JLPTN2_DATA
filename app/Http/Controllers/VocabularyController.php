@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vocabulary;
+use App\Models\VocabularyExample;
 use App\Http\Resources\Vocabulary\VocabularyResource;
 use App\Http\Resources\Vocabulary\VocabularyChapterResource;
 
@@ -159,6 +160,7 @@ class VocabularyController extends Controller
     public function destroy($id)
     {
         $voca = Vocabulary::find($id);
+        VocabularyExample::where('vocaId', $id)->delete();
         $result = $voca->delete();
         if ($result) {
             \Session::flash('success', 'Vocabulary successfully deleted.');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Vocabulary\VocabularyExampleResource;
+use App\Http\Resources\Vocabulary\VocabularyChapterResource;
 use App\Models\Vocabulary;
 use App\Models\VocabularyExample;
 use Illuminate\Http\Request;
@@ -69,11 +70,12 @@ class VocabularyExampleController extends Controller
     public function store(Request $request)
     {
         $vocaExample = VocabularyExample::create([
-            'cateId' => $request->cateId,
-            'chapter' => $request->chapter,
-            'content' => $request->content,
-            'onRead' => $request->onRead,
-            'mean' => $request->mean,
+            'cateId'    => $request->cateId,
+            'vocaId'    => $request->vocaId,
+            'chapter'   => $request->chapter,
+            'content'   => $request->content,
+            'onRead'    => $request->onRead,
+            'mean'      => $request->mean,
         ]);
         $voca = Vocabulary::find($request->vocaId);
         if(isset($voca) && $voca->exampleId == 0){
@@ -121,6 +123,24 @@ class VocabularyExampleController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getVocaExChapter(Request $request)
+    {
+        $search = $request->key;
+        $cate = $request->cate;
+        $kanjiEx = [];
+        if (isset($search)) {
+            $kanjiEx = Vocabulary::where('cateId', $cate)->where('chapterName', 'LIKE', '%'.$search.'%')->groupBy('chapter')->get(['chapter', 'chapterName']);
+        } else {
+            $kanjiEx = Vocabulary::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
+        }
+       return ['results' => VocabularyChapterResource::collection($kanjiEx)];
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -129,6 +149,15 @@ class VocabularyExampleController extends Controller
      */
     public function edit($id)
     {
+        
+        $fixChapter = [];
+        $objVoca = VocabularyExample::find($id);
+        $voca = Vocabulary::where('id', $objVoca->vocaId)->get()->first();
+        $fixChapter[] = $voca->chapter;
+        $fixChapter[] = $voca->chapterName;
+        return view('vocabulary.vocabulary_example_action', [
+            'voca'=>new VocabularyExampleResource($objVoca),
+            'fixChapter' => $fixChapter]);
     }
 
     /**
@@ -142,7 +171,7 @@ class VocabularyExampleController extends Controller
     {
         $vocaExample = VocabularyExample::find($id);
         $vocaExample = $vocaExample->update([
-            'cateId' => $request->cateId,
+            'cateId' => $request->category,
             'chapter' => $request->chapter,
             'content' => $request->content,
             'onRead' => $request->onRead,
@@ -166,8 +195,15 @@ class VocabularyExampleController extends Controller
      */
     public function destroy($id)
     {
-        $voca = VocabularyExample::find($id);
-        $result = $voca->delete();
+        $vocaEx = VocabularyExample::find($id);
+        $countEx = VocabularyExample::where('vocaId', $vocaEx->vocaId)->count();
+        if($countEx == 1){
+            $voca = Vocabulary::where('id', $vocaEx->vocaId);
+            $voca->update([
+                'exampleId' => 0,
+            ]);
+        }
+        $result = $vocaEx->delete();
         if ($result) {
             \Session::flash('success', 'Vocabulary example successfully deleted.');
 

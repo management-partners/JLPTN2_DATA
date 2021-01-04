@@ -41,7 +41,7 @@
                 <select name="chapter" id="chapter" class="form-control select2">
                     <option value="{{ $voca->chapter }}" selected="selected">{{ $voca->chapterName }}</option>
                 </select>
-                <input type="hidden" id="chapter_name" name="chapter_name">
+                <input type="hidden" id="chapter_name" name="chapter_name" value="{{$voca->chapterName}}">
             </div>
         </div>
         <div class="mb-3 row">

@@ -32,9 +32,9 @@
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
                 <select name="chapter" id="chapter" class="form-control select2">
-                    <option value="{{ $voca->chapter }}" selected="selected">{{ $voca->chapterEx }}</option>
+                    <option value="{{ $fixChapter[0] }}" selected="selected">{{ $fixChapter[1] }}</option>
                 </select>
-                <input type="hidden" name="chapter_name" id="chapter_name">
+                <input type="hidden" name="chapter_name" id="chapter_name" value="{{$fixChapter[1]}}">
             </div>
         </div>
         <div class="mb-3 row">
@@ -117,22 +117,7 @@
 
 @endsection
 @section('script')
-<script>
-    $(document).ready(function() {
 
-        $("#newChapter").change(function() {
-            var $input = $(this);
-            if ($input.is(":checked")) {
-                $("#new").show();
-                $("#old").hide();
-            } else {
-                $("#new").hide()
-                $("#old").show()
-            }
-        }).change();
-
-    });
-</script>
 <script>
     $(document).ready(function() {
 
@@ -141,7 +126,7 @@
             minimumInputLength: 0,
             theme: "classic",
             ajax: {
-                url: "{{ route("getVocabularyChapterExist") }}",
+                url: "{{ route("getVocaExChapter") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {

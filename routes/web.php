@@ -45,3 +45,4 @@ Route::get('vocabulary/search/chapter', [VocabularyController::class,"getVocabul
 
 Route::Resource('vocabulary-example', VocabularyExampleController::class);
 Route::get('vocabulary-example/search/{id}', [VocabularyExampleController::class,"getVocabularyEx"])->name('getVocabularyEx');
+Route::get('vocabulary-example/example/search', [VocabularyExampleController::class,"getVocaExChapter"])->name("getVocaExChapter");
