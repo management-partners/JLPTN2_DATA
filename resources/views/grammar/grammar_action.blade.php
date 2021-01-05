@@ -109,7 +109,7 @@
                 </div>
                 <div id="old" class="col-sm-8">
                     <select name="chapter" id="chapter" class="form-control select2"></select>
-                    <input type="hidden" name="chapter_name" id="chapter_name">
+                    <input type="hidden" name="op_chapter_name" id="chapter_name">
                 </div>
             </div>
         </div>
@@ -169,6 +169,7 @@
 </style>
 @endsection
 @section('script')
+
 <script type="text/javascript">
     ClassicEditor
         .create(document.querySelector('#structs'), 
@@ -177,12 +178,8 @@
             
         })
         .then(editor => {
+            
             window.use = editor;
-            editor.editorConfig = function( config )
-                {
-                config.enterMode = CKEDITOR.ENTER_BR;
-                config.shiftEnterMode = CKEDITOR.ENTER_BR;
-                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -194,11 +191,6 @@
         })
         .then(editor => {
             window.use = editor;
-            editor.editorConfig = function( config )
-                {
-                config.enterMode = CKEDITOR.ENTER_BR;
-                config.shiftEnterMode = CKEDITOR.ENTER_BR;
-                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -210,11 +202,6 @@
         })
         .then(editor => {
             window.use = editor;
-            editor.editorConfig = function( config )
-                {
-                config.enterMode = CKEDITOR.ENTER_BR;
-                config.shiftEnterMode = CKEDITOR.ENTER_BR;
-                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -226,11 +213,6 @@
         })
         .then(editor => {
             window.use = editor;
-            editor.editorConfig = function( config )
-                {
-                config.enterMode = CKEDITOR.ENTER_BR;
-                config.shiftEnterMode = CKEDITOR.ENTER_BR;
-                };
         })
         .catch(err => {
             console.error(err.stack);

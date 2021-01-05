@@ -48,10 +48,10 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Category</th>
-            <th scope="col">Chapter</th>
-            <th scope="col">Structs</th>
-            <th scope="col">Use</th>
+            <th scope="col" style="width:10%;">Category</th>
+            <th scope="col" style="width:10%;">Chapter</th>
+            <th scope="col" style="width:10%;">Structs</th>
+            <th scope="col" style="width:10%;">Use</th>
             <th scope="col">Mean</th>
             <th scope="col">Description</th>
             <th scope="col" style="width:12%;">Action</th>
@@ -65,13 +65,13 @@
                 <td>{{ $lst->chapterName }}</td>
                 <td>
                     <a href="{{ route('grammar.show', $lst->id) }}">
-                        {{ $lst->structs }}
+                        {!! $lst->structs !!}
                     </a>
 
                 </td>
-                <td>{{ $lst->toUse }}</td>
-                <td>{{ $lst->mean }}</td>
-                <td>{{ $lst->description }}</td>
+                <td>{!! $lst->toUse !!}</td>
+                <td>{!! $lst->mean !!}</td>
+                <td>{!! $lst->description !!}</td>
                 <td>
                     <div class="action-example">
                         @if($lst->exampleId == 0)

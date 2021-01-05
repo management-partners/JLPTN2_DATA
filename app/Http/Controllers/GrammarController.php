@@ -57,16 +57,20 @@ class GrammarController extends Controller
      */
     public function store(Request $request)
     {
-        if (substr_count($request->structs, '<p>') == 1) {
+        if (substr_count($request->structs, '<p>') >= 1) {
+            $request->structs = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->structs);
             $request->structs = preg_replace('/<\/?p>/i', '', $request->structs);
         }
-        if (substr_count($request->toUse, '<p>') == 1) {
+        if (substr_count($request->toUse, '<p>') >= 1) {
+            $request->toUse = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->toUse);
             $request->toUse = preg_replace('/<\/?p>/i', '', $request->toUse);
         }
-        if (substr_count($request->mean, '<p>') == 1) {
+        if (substr_count($request->mean, '<p>') >= 1) {
+            $request->mean = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->mean);
             $request->mean = preg_replace('/<\/?p>/i', '', $request->mean);
         }
-        if (substr_count($request->description, '<p>') == 1) {
+        if (substr_count($request->description, '<p>') >= 1) {
+            $request->description = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->description);
             $request->description = preg_replace('/<\/?p>/i', '', $request->description);
         }
         $grammar = Grammar::create(
@@ -74,7 +78,7 @@ class GrammarController extends Controller
                 'cateId' => $request->category,
                 'chapter' => $request->chapter,
                 'exampleId' => 0,
-                'chapterName' => $request->chapter_name,
+                'chapterName' => $request->op_chapter_name==null?$request->chapter_name:$request->op_chapter_name,
                 'structs' => $request->structs,
                 'toUse' => $request->toUse,
                 'mean' => $request->mean,
@@ -166,16 +170,20 @@ class GrammarController extends Controller
     public function update(Request $request, $id)
     {
         $grammar = Grammar::find($id);
-        if (substr_count($request->structs, '<p>') == 1) {
+        if (substr_count($request->structs, '<p>') >= 1) {
+            $request->structs = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->structs);
             $request->structs = preg_replace('/<\/?p>/i', '', $request->structs);
         }
-        if (substr_count($request->toUse, '<p>') == 1) {
+        if (substr_count($request->toUse, '<p>') >= 1) {
+            $request->toUse = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->toUse);
             $request->toUse = preg_replace('/<\/?p>/i', '', $request->toUse);
         }
-        if (substr_count($request->mean, '<p>') == 1) {
+        if (substr_count($request->mean, '<p>') >= 1) {
+            $request->mean = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->mean);
             $request->mean = preg_replace('/<\/?p>/i', '', $request->mean);
         }
-        if (substr_count($request->description, '<p>') == 1) {
+        if (substr_count($request->description, '<p>') >= 1) {
+            $request->description = preg_replace('/<\/?p><\/?p>/i', '<br/>', $request->description);
             $request->description = preg_replace('/<\/?p>/i', '', $request->description);
         }
         $grammar = $grammar->update(

@@ -15,12 +15,13 @@ class GrammarExampleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'productId' => $this->productId,
-            'cate'      => $this->cate,
-            'title'     => $this->title,
-            'toRead'    => $this->toRead,
-            'mean'      => $this->mean,
+            'id'            => $this->id,
+            'productId'     => $this->productId,
+            'chapterName'   => $this->chapterName,
+            'cate'          => $this->cate,
+            'title'         => $this->title,
+            'toRead'        => $this->toRead,
+            'mean'          => $this->mean,
         ];
     }
 }

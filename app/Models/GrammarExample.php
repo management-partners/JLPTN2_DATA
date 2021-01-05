@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Grammar;
 
 class GrammarExample extends Model
 {
@@ -22,5 +23,8 @@ class GrammarExample extends Model
                 return 'Kanji Look And Learn';
 
         }
+    }
+    public function getChapterNameAttribute(){
+        return Grammar::where('chapter', $this->chapter)->get('chapterName')->first()->chapterName;
     }
 }

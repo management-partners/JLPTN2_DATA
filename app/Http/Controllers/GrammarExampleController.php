@@ -47,7 +47,6 @@ class GrammarExampleController extends Controller
      */
     public function create(Request $request)
     {
-        var_dump($request->id);
         $chapter = Grammar::find($request->id);
         $fixChapter = [];
         $fixChapter[] = $chapter->chapter;

@@ -61,7 +61,7 @@
                     <td>{{ $lst->id }}</td>
                     <td>{{ $lst->productId }}</td>
                     <td>{{ $lst->cate }}</td>
-                    <td>{{ $lst->chapter }}</td>
+                    <td>{{ $lst->chapterName }}</td>
                     <td>
                         <a href="{{ route('grammar-example.show', $lst->id) }}">
                             {{ $lst->title }}
@@ -121,14 +121,14 @@
                     <td>{{ $lst->id }}</td>
                     <td>{{ $lst->productId }}</td>
                     <td>{{ $lst->cate }}</td>
-                    <td>{{ $lst->chapter }}</td>
+                    <td>{{ $lst->chapterName }}</td>
                     <td>
                         <a href="{{ route('grammar-example.show', $lst->id) }}">
-                            {{ $lst->title }}
+                            {!! $lst->title !!}
                         </a>
                     </td>
-                    <td>{{ $lst->toRead }}</td>
-                    <td>{{ $lst->mean }}</td>
+                    <td>{!! $lst->toRead !!}</td>
+                    <td>{!! $lst->mean !!}</td>
                     <td>
                         <div class="action-example">
                             <form action="{{ route('grammar-example.create') }}" method="POST">
