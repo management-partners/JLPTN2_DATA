@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "flutter",
+            "group": "flutter",
+            "database": "${workspaceFolder:UpdateDataJLPTN2}/public/assets/FlutterDB.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

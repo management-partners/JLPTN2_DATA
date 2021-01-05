@@ -9,7 +9,7 @@
 @endif
 @if(isset($grammarEx))
 
-    <form class="action-form" action="{{ route('grammar-example.update', $grammarEx->id) }}" action="POST">
+    <form class="action-form" action="{{ route('grammar-example.update', $grammarEx->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
@@ -25,17 +25,18 @@
 
         <div class="mb-3 row">
             <label for="chapter" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-6">{{$grammarEx->text}}
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
-                    <option value="{{$grammarEx->chapter}}" selected="selected">{!! $chapter_name !!}</option>
+            <div class="col-sm-6">
+                <select name="chapter" id="chapter" class="form-control select2">
+                    <option value="{{ $grammarEx->chapter }}" selected="selected">{!! $chapter_name !!}</option>
                 </select>
+                <input type="hidden" id="chapter_name" name="chapter_name" value="{!! $chapter_name !!}">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-2 col-form-label">Grammar</label>
             <div class="col-sm-6">
-                <select id="grammar" name="list_grammar[]" class="form-select select2">
-                    <option value="{{$grammarEx->productId}}" selected="selected">{!! $grammar_name !!}</option>
+                <select id="grammar" name="grammar" class="form-select select2">
+                    <option value="{{ $grammarEx->productId }}" selected="selected">{!! $grammar_name !!}</option>
                 </select>
             </div>
         </div>
@@ -43,13 +44,13 @@
         <div class="mb-3 row">
             <label for="exContent" class="col-sm-2 col-form-label">Example Content</label>
             <div class="col-sm-10" id="exContent">
-                <textarea name="structs" id="structs" class="form-control ckeditor">{{ $grammarEx->title }}</textarea>
+                <textarea name="title" id="title" class="form-control ckeditor">{{ $grammarEx->title }}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">Use</label>
             <div class="col-sm-10" id="useControl">
-                <textarea name="use" id="use" class="form-control ckeditor">{{ $grammarEx->toRead }}</textarea>
+                <textarea name="toRead" id="toRead" class="form-control ckeditor">{{ $grammarEx->toRead }}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -69,7 +70,7 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('grammar-example.create') }}" action="POST">
+    <form class="action-form" action="{{ route('grammar-example.store') }}" method="POST">
         @csrf
 
         <div class="mb-3 row">
@@ -82,15 +83,6 @@
                 </select>
             </div>
         </div>
-
-        {{-- <div class="mb-3 row">
-            <label for="chapter" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-6">
-                <select name="chapter_name[]" id="chapter" class="form-control select2">
-                    
-                </select>
-            </div>
-        </div> --}}
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10 floatLeft">
@@ -110,34 +102,38 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
+                    <select name="chapter" id="chapter" class="form-control select2">
+                        <option value="{{ $fixChapter[0] }}" selected="selected">{{ $fixChapter[1] }}</option>
+                    </select>
+                    <input type="hidden" name="chapter_name" value="{{ $fixChapter[1] }}">
                 </div>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-2 col-form-label">Grammar</label>
             <div class="col-sm-6">
-                <select id="grammar" name="list_grammar[]" class="form-select select2"></select>
+                <select id="grammar" name="grammar" class="form-select select2">
+                    <option value="{{ $fixGrammar[0] }}" selected="selected">{{ $fixGrammar[1] }}</option>
+                </select>
+                <input type="hidden" name="grammar_name" value="{{ $fixGrammar[1] }}">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="exContent" class="col-sm-2 col-form-label">Example Content</label>
             <div class="col-sm-10" id="exContent">
-                <textarea name="structs" id="structs" class="form-control ckeditor"></textarea>
+                <textarea name="title" id="title" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">Read</label>
             <div class="col-sm-10" id="useControl">
-                <textarea name="use" id="use" class="form-control ckeditor"></textarea>
+                <textarea name="toRead" id="toRead" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="meanControl" class="col-sm-2 col-form-label">Mean</label>
             <div class="col-sm-10" id="meanControl">
-                <textarea name="mean" id="mean" class="form-control ckeditor">
-
-                                                                </textarea>
+                <textarea name="mean" id="mean" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -170,7 +166,7 @@
 @section('script')
 <script type="text/javascript">
     ClassicEditor
-        .create(document.querySelector('#structs'), {
+        .create(document.querySelector('#title'), {
             language: 'ja'
             // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
         })
@@ -181,7 +177,7 @@
             console.error(err.stack);
         });
     ClassicEditor
-        .create(document.querySelector('#use'), {
+        .create(document.querySelector('#toRead'), {
             language: 'ja'
             // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
         })
@@ -206,22 +202,22 @@
 <script>
     $(document).ready(function() {
         $('#grammar').select2({
-             placeholder: "Choose grammar...",
+            placeholder: "Choose grammar...",
             minimumInputLength: 0,
             theme: "classic",
             ajax: {
                 url: "{{ route("getGrammar") }}",
                 dataType: 'json',
                 data: function(params) {
-                var query = {
-                    key: params.term,
-                    chapter: $("#chapter").val(),
-                    type: 'public'
-                }
+                    var query = {
+                        key: params.term,
+                        chapter: $("#chapter").val(),
+                        type: 'public'
+                    }
 
-                // Query parameters will be ?key=[term]&type=public
-                return query;
-            },
+                    // Query parameters will be ?key=[term]&type=public
+                    return query;
+                },
                 processResults: function(data) {
                     return {
                         results: data.results
@@ -235,7 +231,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        
+
         $('#chapter').select2({
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
@@ -260,6 +256,8 @@
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

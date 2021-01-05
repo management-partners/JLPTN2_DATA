@@ -3,11 +3,6 @@
 @section('content')
 <h1> Grammar Example List </h1>
 
-<div class="create-button">
-    <a href="{{ route('grammar-example.create') }}">
-        <span class="menu-text btn btn-primary"> Create New </span>
-    </a>
-</div>
 <div class="card">
     <div class="card-header"> Filter</div>
     <div class="card-body">
@@ -22,21 +17,28 @@
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-                        
+
                     </select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
                     </select>
+                    <input type="hidden" name="chapter_name" value="{{ $searchChapterName }}">
                 @endif
 
             </div>
         </form>
     </div>
 </div>
-@if(Session::has('flash_message'))
-    <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
+@if(Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ Session::get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@elseif(Session::has('fail'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ Session::get('fail') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 @if(isset($grammarEx))
@@ -50,7 +52,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col" style="width:8%;">Action</th>
+                <th scope="col" style="width:12%;">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -68,16 +70,27 @@
                     <td>{{ $lst->toRead }}</td>
                     <td>{{ $lst->mean }}</td>
                     <td>
+                        <div class="action-example">
+                            <form action="{{ route('grammar-example.create') }}" method="POST">
+                                <input type="hidden" name="id" value="{{ $lst->id }}">
+                                @method("GET")
+                                @csrf
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create grammar example">
+                                    <i class="fab fa-jira"></i>
+                                </button>
+                            </form>
+
+                        </div>
                         <div class="action-edit">
-                            <a href="{{ route('grammar-example.edit', $lst->id) }}">
+                            <a href="{{ route('grammar-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit grammar example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('grammar-example.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                            <form action="{{ route('grammar-example.destroy', $lst->id) }}" method="POST" >
                                 @method("DELETE")
                                 @csrf
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger"  data-bs-toggle="tooltip" data-bs-placement="top" title="Delete grammar example" onClick="return confirm('Do you want delete?')" >
                                     <i class="fas fa-trash-alt "></i>
                                 </button>
                             </form>
@@ -99,7 +112,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col" style="width:8%;">Action</th>
+                <th scope="col" style="width:12%;">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -117,16 +130,27 @@
                     <td>{{ $lst->toRead }}</td>
                     <td>{{ $lst->mean }}</td>
                     <td>
+                        <div class="action-example">
+                            <form action="{{ route('grammar-example.create') }}" method="POST">
+                                <input type="hidden" name="id" value="{{ $lst->id }}">
+                                @method("GET")
+                                @csrf
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create grammar example">
+                                    <i class="fab fa-jira"></i>
+                                </button>
+                            </form>
+
+                        </div>
                         <div class="action-edit">
-                            <a href="{{ route('grammar-example.edit', $lst->id) }}">
+                            <a href="{{ route('grammar-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit grammar example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('grammar-example.destroy', $lst->id) }}" method="POST" onSubmit="Do you want delete?">
+                            <form action="{{ route('grammar-example.destroy', $lst->id) }}" method="POST" >
                                 @method("DELETE")
                                 @csrf
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger"  data-bs-toggle="tooltip" data-bs-placement="top" title="Delete grammar example" onClick="return confirm('Do you want delete?')" >
                                     <i class="fas fa-trash-alt "></i>
                                 </button>
                             </form>
@@ -147,7 +171,7 @@
         $('#chapter').select2({
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
-             allowClear: true,
+            allowClear: true,
             theme: "classic",
             ajax: {
                 url: "{{ route("getChapterExist") }}",

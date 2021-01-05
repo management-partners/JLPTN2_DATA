@@ -2,29 +2,28 @@
 @section('title', 'Grammar Page')
 @section('content')
 <h1> Grammar Action </h1>
-@if(Session::has('flash_message'))
-    <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
-    </div>
-@endif
+
 @if(isset($grammar))
 
-    <form class="action-form" action="{{ route('grammar.update', $grammar->id) }}" action="POST">
+    <form class="action-form" action="{{ route('grammar.update', $grammar->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $grammar->id }}</label>
-                <a href="{{ route('get-ex', $grammar->exampleId) }}">
+                @if ($grammar->exampleId != 0)
+                    <a href="{{ route('showEx', $grammar->exampleId) }}">
                     Example
                 </a>
+                @endif
+                
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-4">
-                <select name="category" class="form-control">
+                <select name="category" class="form-control" id="category">
                     <option value="1" {{ $grammar->cateId == 1 ? 'selected' : '' }}>新完全マスタ</option>
                     <option value="2" {{ $grammar->cateId == 2 ? 'selected' : '' }}>総まとめ</option>
                     <option value="3" {{ $grammar->cateId == 3 ? 'selected' : '' }}>耳から覚える</option>
@@ -34,13 +33,10 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter" class="form-control">
-                    @foreach($lstChapter as $chap)
-                        <option value="{{ $chap->chapter }}" {{ $grammar->chapter == $chap->chapter ? 'selected' : '' }}>
-                            {{ $chap->chapter . ' 」「 ' . $chap->chapterName }}
-                        </option>
-                    @endforeach
+                <select name="chapter" id="chapter" class="form-control select2">
+                    <option value="{{ $grammar->chapter }}" selected="selected">{{ $grammar->chapterName }}</option>
                 </select>
+                <input type="hidden" name="chapter_name" id="chapter_name" value="{{ $grammar->chapterName }}">
             </div>
         </div>
         <div class="mb-3 row">
@@ -52,7 +48,7 @@
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">Use</label>
             <div class="col-sm-10" id="useControl">
-                <textarea name="use" id="use" class="form-control ckeditor">{{ $grammar->toUse }}</textarea>
+                <textarea name="toUse" id="use" class="form-control ckeditor">{{ $grammar->toUse }}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -80,12 +76,13 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{ route('grammar.create') }}" action="POST">
+    <form class="action-form" action="{{ route('grammar.store') }}" method="POST">
+        @method('POST')
         @csrf
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Categoty</label>
             <div class="col-sm-4">
-                <select name="category" class="form-control">
+                <select name="category" class="form-control" id="category">
                     <option value="1">新完全マスタ</option>
                     <option value="2">総まとめ</option>
                     <option value="3">耳から覚える</option>
@@ -111,7 +108,8 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name[]" id="chapter" class="form-control select2"></select>
+                    <select name="chapter" id="chapter" class="form-control select2"></select>
+                    <input type="hidden" name="chapter_name" id="chapter_name">
                 </div>
             </div>
         </div>
@@ -124,7 +122,7 @@
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">Use</label>
             <div class="col-sm-10" id="useControl">
-                <textarea name="use" id="use" class="form-control ckeditor"></textarea>
+                <textarea name="toUse" id="use" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -173,12 +171,18 @@
 @section('script')
 <script type="text/javascript">
     ClassicEditor
-        .create(document.querySelector('#structs'), {
+        .create(document.querySelector('#structs'), 
+        {
             language: 'ja'
-            // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+            
         })
         .then(editor => {
             window.use = editor;
+            editor.editorConfig = function( config )
+                {
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -190,6 +194,11 @@
         })
         .then(editor => {
             window.use = editor;
+            editor.editorConfig = function( config )
+                {
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -201,6 +210,11 @@
         })
         .then(editor => {
             window.use = editor;
+            editor.editorConfig = function( config )
+                {
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -212,6 +226,11 @@
         })
         .then(editor => {
             window.use = editor;
+            editor.editorConfig = function( config )
+                {
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_BR;
+                };
         })
         .catch(err => {
             console.error(err.stack);
@@ -260,6 +279,8 @@
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

@@ -20,7 +20,7 @@ class GrammarExampleController extends Controller
     {
         $search = $request->chapter;
         $cate = $request->category;
-        $chapter = 0;
+        $chapter = null;
         $chapterName = '';
         $grammarEx = [];
         if (isset($search) && $search != 0 && isset($cate)) {
@@ -45,10 +45,17 @@ class GrammarExampleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $grammarEx = Grammar::groupBy('chapter')->get(['chapter', 'chapterName']);
-        return view('grammar.grammar_example_action',['chapter' => GrammarChapterResource::collection($grammarEx)]);
+        var_dump($request->id);
+        $chapter = Grammar::find($request->id);
+        $fixChapter = [];
+        $fixChapter[] = $chapter->chapter;
+        $fixChapter[] = $chapter->chapterName;
+        $fixGrammar =[];
+        $fixGrammar[] = $chapter->id;
+        $fixGrammar[] = $chapter->structs;
+        return view('grammar.grammar_example_action', ['grammarEx'=> null, 'fixChapter'=>$fixChapter, 'fixGrammar'=> $fixGrammar]);
     }
 
     /**
@@ -59,7 +66,33 @@ class GrammarExampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (substr_count($request->title, '<p>') == 1) {
+            $request->title = preg_replace('/<\/?p>/i', '', $request->title);
+        }
+        if (substr_count($request->toRead, '<p>') == 1) {
+            $request->toRead = preg_replace('/<\/?p>/i', '', $request->toRead);
+        }
+        if (substr_count($request->mean, '<p>') == 1) {
+            $request->mean = preg_replace('/<\/?p>/i', '', $request->mean);
+        }
+        
+        $grammEx = GrammarExample::create(
+            [
+                'productId' => $request->grammar,
+                'chapter'   => $request->chapter,
+                'category'  => $request->category,
+                'title'     => $request->title,
+                'toRead'    => $request->toRead,
+                'mean'      => $request->mean,
+            ]
+        );
+        if ($grammEx) {
+            \Session::flash('success', 'Grammar example successfully created.');
+        } else {
+            \Session::flash('fail', 'Grammar example unsuccessfully created.');
+        }
+
+        return redirect()->route('grammar-example.index');        
     }
 
     /**
@@ -139,7 +172,10 @@ class GrammarExampleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $grammarEx = GrammarExample::find($id);
+        $chapter = Grammar::where('id', $id)->groupBy('chapter')->get('chapterName');
+        $grammar = Grammar::where('id', $id)->get('structs');
+        return view('grammar.grammar_example_action', ['grammarEx'=> new GrammarExampleResource( $grammarEx), 'chapter_name'=>$chapter[0]["chapterName"], 'grammar_name'=> $grammar[0]["structs"]]);
     }
 
     /**
@@ -150,8 +186,34 @@ class GrammarExampleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        if (substr_count($request->title, '<p>') == 1) {
+            $request->title = preg_replace('/<\/?p>/i', '', $request->title);
+        }
+        if (substr_count($request->toRead, '<p>') == 1) {
+            $request->toRead = preg_replace('/<\/?p>/i', '', $request->toRead);
+        }
+        if (substr_count($request->mean, '<p>') == 1) {
+            $request->mean = preg_replace('/<\/?p>/i', '', $request->mean);
+        }
+        $grammEx = GrammarExample::find($id);
+        $grammEx = $grammEx->update(
+            [
+                'productId' => $request->grammar,
+                'chapter'   => $request->chapter,
+                'category'  => $request->category,
+                'title'     => $request->title,
+                'toRead'    => $request->toRead,
+                'mean'      => $request->mean,
+            ]
+        );
+        if ($grammEx) {
+            \Session::flash('success', 'Grammar example successfully updated.');
+        } else {
+            \Session::flash('fail', 'Grammar example unsuccessfully updated.');
+        }
+
+        return redirect()->route('grammar-example.index');      
     }
 
     /**
@@ -162,7 +224,21 @@ class GrammarExampleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $grammar = GrammarExample::find($id);
+        $counter = GrammarExample::where('productId', $id)->count('exampleId');
+        if($counter == 1){
+            $gram = Grammar::where('id', $grammar->productId)->get();
+            $gram->update([
+                'exampleId' => 0
+            ]);
+        }
+        $result = $grammar->destroy();
+        if ($result) {
+            \Session::flash('success', 'Grammar successfully deleted.');
+            return redirect()->route('grammar.index');
+        } else {
+            \Session::flash('fail', 'Grammar unsuccessfully deleted.');
+        }
     }
 
 }

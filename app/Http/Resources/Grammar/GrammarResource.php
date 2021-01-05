@@ -18,7 +18,7 @@ class GrammarResource extends JsonResource
             'id'            => $this->id,
             'category'      => $this->category,
             'structs'       => $this->structs,
-            'toUser'        => $this->toUse,
+            'toUse'         => $this->toUse,
             'mean'          => $this->mean,
             'description'   => $this->description,
         ];

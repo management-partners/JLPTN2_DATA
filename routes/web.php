@@ -26,7 +26,7 @@ Route::resource('grammar', GrammarController::class);
 Route::get('grammar/search/chapter-exist', [GrammarController::class,'getGrammarChapterExist'])->name('getGrammarChapterExist');
 
 Route::resource('grammar-example', GrammarExampleController::class);
-Route::get('grammar-example/get-ex/{id}', [GrammarExampleController::class, "showEx"])->name('get-ex');
+Route::get('grammar-example/get-ex/{id}', [GrammarExampleController::class, "showEx"])->name('showEx');
 Route::get('grammar-example/search/grammar', [GrammarExampleController::class, "getGrammar"])->name('getGrammar');
 Route::get('grammar-example/search/chapter', [GrammarExampleController::class, "getChapterExist"])->name('getChapterExist');
 
