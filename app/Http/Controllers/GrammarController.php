@@ -83,9 +83,9 @@ class GrammarController extends Controller
             ]
         );
         if ($grammar) {
-            \Session::flash('success', 'Kanji successfully created.');
+            \Session::flash('success', 'Grammar successfully created.');
         } else {
-            \Session::flash('fail', 'Kanji unsuccessfully created.');
+            \Session::flash('fail', 'Grammar unsuccessfully created.');
         }
 
         return redirect()->route('grammar.index');
@@ -191,9 +191,9 @@ class GrammarController extends Controller
         );
 
         if ($grammar) {
-            \Session::flash('success', 'Kanji successfully created.');
+            \Session::flash('success', 'Grammar successfully created.');
         } else {
-            \Session::flash('fail', 'Kanji unsuccessfully created.');
+            \Session::flash('fail', 'Grammar unsuccessfully created.');
         }
 
         return redirect()->route('grammar.index');
