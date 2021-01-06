@@ -20,9 +20,12 @@
             <label for="id" class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $voca->id }}</label>
-                <a href="{{ route('getVocabularyEx', $voca->exampleId) }}">
+                @if ($voca->exampleId != 0)
+                    <a href="{{ route('getVocabularyEx', $voca->exampleId) }}">
                     Example
                 </a>
+                @endif
+                
             </div>
         </div>
         <div class="mb-3 row">
@@ -104,7 +107,7 @@
                 </div>
                 <div id="old" class="col-sm-8">
                     <select name="chapter" id="chapter" class="form-control select2"></select>
-                    <input type="hidden" id="chapter_name" name="chapter_name">
+                    <input type="hidden" id="chapter_name" name="op_chapter_name">
                 </div>
             </div>
         </div>

@@ -118,6 +118,7 @@
                 </div>
                 <div id="old" class="col-sm-8">
                     <select name="chapter_name" id="chapter" class="form-control select2"></select>
+                    <input type="hidden" name="op_chapter_name">
                 </div>
             </div>
         </div>
@@ -206,6 +207,8 @@
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

@@ -59,21 +59,15 @@ class KanjiController extends Controller
      */
     public function store(Request $request)
     {
-        $chapterN = Kanji::where('chapter', $request->chapter_name)->get('chapterName')->first();
-        $tempChapterName = '';
-        if(isset($chapterN)){
-            $tempChapterName = $chapterN->chapterName;
-        }else{
-            $tempChapterName = $request->chapter_name;
-        }
+        
         $kanji = new Kanji();
         $kanji->cateId      = $request->category;
         $kanji->exampleId   = 0;
         $kanji->chapter     = $request->chapter;
-        $kanji->chapterName = $tempChapterName;
+        $kanji->chapterName = $request->op_chapter_name==null ? $request->chapter_name: $request->op_chapter_name;
         $kanji->kanji       = $request->kanji;
         $kanji->onRead      = $request->onRead;
-        $kanji->kunRead     = $request->kunReadd;
+        $kanji->kunRead     = $request->kunRead;
         $kanji->otherRead   = $request->otherRead;
         $kanji->mean        = $request->mean;
         $kanji->isolation   = 0;
@@ -152,7 +146,7 @@ class KanjiController extends Controller
         $kanji->chapterName = $chapterN;
         $kanji->kanji       = $request->kanji;
         $kanji->onRead      = $request->onRead;
-        $kanji->kunRead     = $request->kunReadd;
+        $kanji->kunRead     = $request->kunRead;
         $kanji->otherRead   = $request->otherRead;
         $kanji->mean        = $request->mean;
         $result = $kanji->update();

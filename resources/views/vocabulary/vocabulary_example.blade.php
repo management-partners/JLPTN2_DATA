@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Vocabulary Example Page')
 @section('content')
-    <h1> Vocabulary Example Page </h1>
+<h1> Vocabulary Example Page </h1>
 <div class="card">
     <div class="card-header"> Filter</div>
     <div class="card-body">
@@ -16,7 +16,7 @@
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-                        
+
                     </select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
@@ -46,9 +46,9 @@
             <th scope="col">Category</th>
             <th scope="col">Chapter</th>
             <th scope="col">Content</th>
-            <th scope="col"> Read</th>
+            <th scope="col">Read</th>
             <th scope="col">Mean</th>
-            <th scope="col" style="width:8%">Action</th>
+            <th scope="col" style="width:12%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -66,6 +66,21 @@
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->mean }}</td>
                 <td>
+                    <div class="action-example">
+                        <form action="{{ route('vocabulary-example.create') }}" method="POST">
+                            <input type="hidden" name="id" value="{{ $lst->id }}">
+                            <input type="hidden" name="cateId" value="{{ $lst->cateId }}">
+                            <input type="hidden" name="cateName" value="{{ $lst->category }}">
+                            <input type="hidden" name="chapter" value="{{ $lst->chapter }}">
+                            <input type="hidden" name="chapterName" value="{{ $lst->chapterEx }}">
+                            @method("GET")
+                            @csrf
+                            <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Kanji example">
+                                <i class="fab fa-jira"></i>
+                            </button>
+                        </form>
+
+                    </div>
                     <div class="action-edit">
                         <a href="{{ route('vocabulary-example.edit', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Vocabulary example">
                             <i class="fas fa-pen-square fa-3x"></i>
@@ -95,7 +110,7 @@
         $('#chapter').select2({
             placeholder: "Choose chapter...",
             minimumInputLength: 0,
-             allowClear: true,
+            allowClear: true,
             theme: "classic",
             ajax: {
                 url: "{{ route("getKanjiChapterExist") }}",

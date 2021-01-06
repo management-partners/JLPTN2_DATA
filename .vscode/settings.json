@@ -6,6 +6,13 @@
             "name": "flutter",
             "group": "flutter",
             "database": "${workspaceFolder:UpdateDataJLPTN2}/public/assets/FlutterDB.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "backup",
+            "group": "backup",
+            "database": "${workspaceFolder:UpdateDataJLPTN2}/public/assets/FlutterDB copy.db"
         }
     ],
     "sqltools.useNodeRuntime": true

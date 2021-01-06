@@ -62,7 +62,7 @@ class VocabularyController extends Controller
                 'cateId'        => $request->category,
                 'chapter'       => $request->chapter,
                 'exampleId'     => 0,
-                'chapterName'   => $request->chapter_name,
+                'chapterName'   => $request->op_chapter_name==null?$request->chapter_name:$request->op_chapter_name,
                 'vocabulary'    => $request->vocabulary,
                 'onRead'        => $request->onRead,
                 'mean'          => $request->mean,
