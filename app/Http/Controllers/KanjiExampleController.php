@@ -60,7 +60,7 @@ class KanjiExampleController extends Controller
     {
         $kanji = KanjiExample::where('kanjiId', $request->kanjiId)->get();
 
-        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji[0])]);
+        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji[0]),'created'=>true]);
     }
 
     /**
@@ -178,8 +178,8 @@ class KanjiExampleController extends Controller
         if (!isset($kanji)) {
             $kanji = Kanji::find($id);
         }
-
-        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji)]);
+        
+        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji),'created'=>false]);
     }
 
     /**
@@ -192,7 +192,7 @@ class KanjiExampleController extends Controller
     public function update(Request $request, $id)
     {
         $kanjiExample = KanjiExample::find($id);
-        $kanjiExample->kanjiId = $request->id;
+        $kanjiExample->kanjiId = $request->kanjiId;
         $kanjiExample->cateId = $request->cateId;
         $kanjiExample->chapter = $request->chapter;
         $kanjiExample->content = $request->kanji;

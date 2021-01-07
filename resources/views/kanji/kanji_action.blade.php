@@ -101,7 +101,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10 floatLeft">
-                <div class="col-sm-2 floatLeft">
+                <div class="col-sm-8 floatLeft">
                     <input class="form-check-input" type="checkbox" value="" id="newChapter">
                     <label class="form-check-label" for="newChapter">
                         New Chapter
@@ -117,8 +117,8 @@
 
                 </div>
                 <div id="old" class="col-sm-8">
-                    <select name="chapter_name" id="chapter" class="form-control select2"></select>
-                    <input type="hidden" name="op_chapter_name">
+                    <select name="chapter" id="chapter" class="form-control select2"></select>
+                    <input type="hidden" name="op_chapter_name" id="op_chapter_name">
                 </div>
             </div>
         </div>
@@ -208,7 +208,7 @@
                 cache: true
             }
         }).on("change", function(e) {
-            $("#chapter_name").val(e.currentTarget.textContent)
+            $("#op_chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

@@ -19,8 +19,8 @@
         <div class="mb-3 row">
             <label for="id" class="col-sm-2 col-form-label">Example ID</label>
             <div class="col-sm-10  floatLeft">
-                <input type="text" class="form-control-plaintext float-start" readonly  value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
-               
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
+
             </div>
         </div>
         <div class="mb-3 row">
@@ -33,8 +33,8 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapterId }}" style="width:10%;" name="chapter">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapterEx }}" style="width:80%;" name="chapterName">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapter }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->chapterName }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
@@ -82,7 +82,12 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
+                @if($created)
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->kanjiId }}" />
+                @else
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
+                @endif
+
             </div>
         </div>
         <div class="mb-3 row">
@@ -97,7 +102,7 @@
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapter }}" style="width:10%;" name="chapter">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterEx?$edit->chapterEx:$edit->chapterName }}" style="width:80%;" name="chapterName">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $edit->chapterName }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">

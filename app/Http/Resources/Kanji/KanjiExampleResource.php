@@ -17,7 +17,7 @@ class KanjiExampleResource extends JsonResource
         return [
             'id'        => $this->id,
             'category'  => $this->category,
-            'chapterEx' => $this->chapterEx,
+            'chapterName' => $this->chapterName,
             'content'   => $this->content,
             'onRead'    => $this->onRead,
             'kunRead'   => $this->kunRead,

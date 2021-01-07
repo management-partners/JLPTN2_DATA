@@ -75,22 +75,22 @@
                 <td>{{ $lst->mean }}</td>
                 <td>
                     <div class="action-example">
-                        @if ($lst->exampleId == 0)
-                        <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
+                        @if($lst->exampleId == 0)
+                            <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
+                                @csrf
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         @else
-                        <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
-                                <i class="fas fa-stream"></i>
-                            </button>
-                        </form>
+                            <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
+                                @csrf
+                                <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
+                                    <i class="fas fa-stream"></i>
+                                </button>
+                            </form>
                         @endif
-                        
+
                     </div>
                     <div class="action-edit">
                         <a href="{{ route('kanji.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji">

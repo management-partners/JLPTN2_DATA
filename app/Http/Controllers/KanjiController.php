@@ -19,7 +19,7 @@ class KanjiController extends Controller
     {  
         $search = $request->chapter;
         $cate = $request->category;
-        $chapter = 0;
+        $chapter = null;
         $chapterName = '';
         $lstKanji = [];
         if (isset($search) && $search != 0 && isset($cate)) {

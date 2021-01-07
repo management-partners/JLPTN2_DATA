@@ -3,8 +3,9 @@ h1{
     text-align: center;
 }
 .app-container{
-    margin-top: 4%;
+    margin-top: 6%;
     padding-bottom: 3%;
+    width: 100%;
 }
 .app-menu{
     background-color: #3ADF00;
