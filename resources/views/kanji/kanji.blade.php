@@ -30,6 +30,16 @@
                 @endif
 
             </div>
+            <div class="col-sm-3 float-start space-chapter">
+                @if(!isset($searchKanji))
+                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()"></select>
+                @else
+                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()">
+                        <option value="{{ $searchKanji }}" selected="selected">{{ $searchKanjiName }}</option>
+                    </select>
+                @endif
+
+            </div>
         </form>
     </div>
 </div>
@@ -132,6 +142,38 @@
                         cate: $("#category").val(),
                         type: 'public'
                     }
+                    return query;
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('#kanjiId').select2({
+            placeholder: "Choose kanji...",
+            minimumInputLength: 0,
+            theme: "classic",
+            allowClear: true,
+            ajax: {
+                url: "{{ route("getKanjiExist") }}",
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        key: params.term,
+                        cate: $("#category").val(),
+                        chapter: $("#chapter").val(),
+                        type: 'public'
+                    }
+
+                    // Query parameters will be ?key=[term]&type=public
                     return query;
                 },
                 processResults: function(data) {
