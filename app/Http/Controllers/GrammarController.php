@@ -92,7 +92,9 @@ class GrammarController extends Controller
             \Session::flash('fail', 'Grammar unsuccessfully created.');
         }
 
-        return redirect()->route('grammar.index');
+        return view('grammar.grammar', ['lstGrammar' => GrammarResource::collection($grammar), 'searchCate' => $grammar->cateId, 'searchChapter' => $grammar->chapter, 'searchChapterName' => $grammar->chapterName]);
+
+        // return redirect()->route('grammar.index');
         // return redirect()->back(); // return create page
     }
 
@@ -204,7 +206,8 @@ class GrammarController extends Controller
             \Session::flash('fail', 'Grammar unsuccessfully created.');
         }
 
-        return redirect()->route('grammar.index');
+        return view('grammar.grammar', ['lstGrammar' => GrammarResource::collection($grammar), 'searchCate' => $grammar->cateId, 'searchChapter' => $grammar->chapter, 'searchChapterName' => $grammar->chapterName]);
+        // return redirect()->route('grammar.index');
     }
 
     /**

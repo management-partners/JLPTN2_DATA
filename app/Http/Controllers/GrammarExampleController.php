@@ -37,6 +37,7 @@ class GrammarExampleController extends Controller
             $grammarEx = GrammarExample::where('category', 1)->get();
             $cate = 1;
         }
+        
         return view('grammar.grammar_example',['lstGrammarEx' => GrammarExampleResource::collection($grammarEx),'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName]);
     }
 
@@ -91,7 +92,10 @@ class GrammarExampleController extends Controller
             \Session::flash('fail', 'Grammar example unsuccessfully created.');
         }
 
-        return redirect()->route('grammar-example.index');        
+        $gr = Grammar::find($grammEx->productId);
+
+        return view('grammar.grammar_example',['lstGrammarEx' => GrammarExampleResource::collection($grammarEx),'searchCate' => $grammEx->category, 'searchChapter' => $grammEx->chapter, 'searchChapterName' => $gr->chapterName]);
+        // return redirect()->route('grammar-example.index');        
     }
 
     /**
@@ -211,8 +215,10 @@ class GrammarExampleController extends Controller
         } else {
             \Session::flash('fail', 'Grammar example unsuccessfully updated.');
         }
+         $gr = Grammar::find($grammEx->productId);
 
-        return redirect()->route('grammar-example.index');      
+        return view('grammar.grammar_example',['lstGrammarEx' => GrammarExampleResource::collection($grammarEx),'searchCate' => $grammEx->category, 'searchChapter' => $grammEx->chapter, 'searchChapterName' => $gr->chapterName]);
+        // return redirect()->route('grammar-example.index');      
     }
 
     /**
