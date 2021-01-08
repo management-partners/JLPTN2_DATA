@@ -13,7 +13,7 @@
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $grammar->id }}</label>
                 @if ($grammar->exampleId != 0)
-                    <a href="{{ route('showEx', $grammar->exampleId) }}">
+                    <a href="{{ route('showEx', $grammar->id) }}">
                     Example
                 </a>
                 @endif

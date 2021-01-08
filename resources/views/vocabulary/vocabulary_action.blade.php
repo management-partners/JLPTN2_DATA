@@ -21,7 +21,7 @@
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $voca->id }}</label>
                 @if ($voca->exampleId != 0)
-                    <a href="{{ route('getVocabularyEx', $voca->exampleId) }}">
+                    <a href="{{ route('getVocabularyEx', $voca->id) }}">
                     Example
                 </a>
                 @endif

@@ -21,7 +21,7 @@
             <div class="col-sm-10  floatLeft">
                 <label for="" style="padding-right:50px;">{{ $kanji->id }}</label>
                 @if ($kanji->exampleId != 0)
-                    <a href="{{ route('getKanjiEx', $kanji->exampleId) }}">
+                    <a href="{{ route('getKanjiEx', $kanji->id) }}">
                         Example
                     </a>
                 @endif
