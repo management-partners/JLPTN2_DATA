@@ -18,23 +18,24 @@ class KanjiExampleController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->chapter;
+        $chapter = $request->chapter;
         $cate = $request->category;
         $kanjiId = $request->kanjiId;
-        $chapter = null;
         $chapterName = '';
         $lstKaniEx = [];
         if (isset($cate)) {
-            if ($search != 0 && $cate != 0 && $kanjiId != 0) {
-                $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $search)->where('kanjiId', $kanjiId)->get();
-                $chapter = $search;
-                $chapterName = Kanji::where('chapter', $search)->get('chapterName')->first()->chapterName;
-            } elseif ($search != 0) {
-                $lstKaniEx = KanjiExample::where('chapter', $search)->get();
-                $chapter = $search;
-                $chapterName = Kanji::where('chapter', $search)->get('chapterName')->first()->chapterName;
+            if ($chapter != 0 && $cate != 0 && $kanjiId != 0) {
+                $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $chapter)->where('kanjiId', $kanjiId)->get();
+                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+
+            } elseif ($chapter != 0) {
+                $lstKaniEx = KanjiExample::where('chapter', $chapter)->get();
+                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+
             } elseif ($cate != 0 && $kanjiId != 0) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->where('kanjiId', $kanjiId)->get();
+            } elseif ($cate != 0) {
+                $lstKaniEx = KanjiExample::where('cateId', $cate)->get();
             }else {
                 $lstKaniEx = KanjiExample::where('cateId', 1)->get();
                 $cate = 1;

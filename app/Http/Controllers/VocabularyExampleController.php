@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Vocabulary\VocabularyExampleResource;
 use App\Http\Resources\Vocabulary\VocabularyChapterResource;
+use App\Http\Resources\Vocabulary\VocabularyExitsResource;
 use App\Models\Vocabulary;
 use App\Models\VocabularyExample;
 use Illuminate\Http\Request;
@@ -17,27 +18,31 @@ class VocabularyExampleController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->chapter;
-        $cate = $request->category;
-        $chapter = null;
-        $chapterName = '';
-        $voca = [];
-        if (isset($search) && $search != 0 && isset($cate)) {
-            $voca = VocabularyExample::where('cateId', $cate)->where('chapter', $search)->get();
+        $search         = $request->chapter;
+        $cate           = $request->category;
+        $vocaparam      = $request->voca;
+        $chapter        = null;
+        $chapterName    = '';
+        $voca           = [];
+        if (isset($search) && $search != 0 && isset($cate) && isset($vocaparam)) {
+            $voca = VocabularyExample::where('cateId', $cate)->where('chapter', $search)->where('vocaId', $vocaparam)->get();
             $chapter = $search;
             $chapterName = Vocabulary::where('chapter', $search)->get('chapterName')->first()->chapterName;
-        } elseif (isset($search) && $search != 0) {
-            $voca = VocabularyExample::where('chapter', $search)->get();
+        } elseif (isset($search) && $search != 0 && isset($vocaparam)) {
+            $voca = VocabularyExample::where('chapter', $search)->where('vocaId', $vocaparam)->get();
             $chapter = $search;
             $chapterName = Vocabulary::where('chapter', $search)->get('chapterName')->first()->chapterName;
-        } elseif (isset($cate)) {
-            $voca = VocabularyExample::where('cateId', $cate)->get();
+        } elseif (isset($cate)&& isset($vocaparam)) {
+            $voca = VocabularyExample::where('cateId', $cate)->where('vocaId', $vocaparam)->get();
         } else {
             $voca = VocabularyExample::where('cateId', 1)->get();
             $cate = 1;
         }
-
-        return view('vocabulary.vocabulary_example', ['lstVocabularyEx' => VocabularyExampleResource::collection($voca), 'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName]);
+        $localVocaName = '';
+        if(isset($vocaparam)){
+            $localVocaName = Vocabulary::find($vocaparam)->vocabulary;
+        }
+        return view('vocabulary.vocabulary_example', ['lstVocabularyEx' => VocabularyExampleResource::collection($voca), 'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName, 'searchVoca' => $vocaparam, 'searchVocaName' => $localVocaName]);
     }
 
     /**
@@ -143,6 +148,25 @@ class VocabularyExampleController extends Controller
             $kanjiEx = Vocabulary::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
         }
        return ['results' => VocabularyChapterResource::collection($kanjiEx)];
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getVocabularyExExist(Request $request)
+    {
+        $search = $request->key;
+        $cate = $request->cate;
+        $chapter = $request->chapter;
+        $kanjiEx = [];
+        if (isset($search) && isset($chapter) && $chapter !=0) {
+            $kanjiEx = Vocabulary::where('cateId', $cate)->where('chapter', $chapter)->where('chapterName', 'LIKE', '%'.$search.'%')->get(['id', 'vocabulary']);
+        } else {
+            $kanjiEx = Vocabulary::where('cateId', $cate)->where('chapter', $chapter)->get(['id', 'vocabulary']);
+        }
+       return ['results' => VocabularyExitsResource::collection($kanjiEx)];
     }
 
     /**

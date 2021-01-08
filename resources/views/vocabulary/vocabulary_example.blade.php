@@ -23,7 +23,15 @@
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
                     </select>
                 @endif
-
+            </div>
+            <div class="col-sm-4 float-start space-chapter">
+                @if(!isset($searchVoca))
+                    <select name="voca" id="voca" class="form-select select2" onChange="this.form.submit()"></select>
+                @else
+                    <select name="voca" id="voca" class="form-select select2" onChange="this.form.submit()">
+                        <option value="{{ $searchVoca }}" selected="selected">{{ $searchVocaName }}</option>
+                    </select>
+                @endif
             </div>
         </form>
     </div>
@@ -106,6 +114,14 @@
 
 @section('script')
 <script>
+$(document).ready(function(){
+    $("#category").on('change', function(){
+        $("#chapter").val(null).trigger("change")
+        $("#voca").val(null).trigger("change")
+    });
+});
+</script>
+<script>
     $(document).ready(function() {
         $('#chapter').select2({
             placeholder: "Choose chapter...",
@@ -113,12 +129,41 @@
             allowClear: true,
             theme: "classic",
             ajax: {
-                url: "{{ route("getKanjiChapterExist") }}",
+                url: "{{ route("getVocabularyChapterExist") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {
                         key: params.term,
                         cate: $("#category").val(),
+                        type: 'public'
+                    }
+                    return query;
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#voca').select2({
+            placeholder: "Choose vocabulary...",
+            minimumInputLength: 0,
+            allowClear: true,
+            theme: "classic",
+            ajax: {
+                url: "{{ route("getVocabularyExExist") }}",
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        key: params.term,
+                        cate: $("#category").val(),
+                        chapter: $("#chapter").val(),
                         type: 'public'
                     }
                     return query;

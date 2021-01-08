@@ -42,7 +42,9 @@ Route::get('kanji/search/kanji', [KanjiExampleController::class,"getKanjiExist"]
 
 Route::Resource('vocabulary', VocabularyController::class);
 Route::get('vocabulary/search/chapter', [VocabularyController::class,"getVocabularyChapterExist"])->name("getVocabularyChapterExist");
+Route::get('vocabulary/search/voca', [VocabularyController::class,"getVocabularyExist"])->name("getVocabularyExist");
 
 Route::Resource('vocabulary-example', VocabularyExampleController::class);
 Route::get('vocabulary-example/search/{id}', [VocabularyExampleController::class,"getVocabularyEx"])->name('getVocabularyEx');
 Route::get('vocabulary-example/example/search', [VocabularyExampleController::class,"getVocaExChapter"])->name("getVocaExChapter");
+Route::get('vocabulary/search/voca-ex', [VocabularyExampleController::class,"getVocabularyExExist"])->name("getVocabularyExExist");

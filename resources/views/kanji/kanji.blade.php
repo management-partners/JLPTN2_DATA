@@ -127,6 +127,14 @@
 
 @section('script')
 <script>
+$(document).ready(function(){
+    $("#category").on('change', function(){
+        $("#chapter").val(null).trigger("change")
+        $("#kanjiId").val(null).trigger("change")
+    });
+});
+</script>
+<script>
     $(document).ready(function() {
         $('#chapter').select2({
             placeholder: "Choose chapter...",
