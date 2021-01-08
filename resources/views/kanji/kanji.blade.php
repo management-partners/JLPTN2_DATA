@@ -159,6 +159,8 @@ $(document).ready(function(){
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#kanjiId").val(null).trigger("change")
         });
     });
 </script>

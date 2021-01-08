@@ -162,6 +162,8 @@ $(document).ready(function(){
                 },
                 cache: true
             }
+        }).on("change", function(e) {
+            $("#voca").val(null).trigger("change")
         });
     });
 </script>
