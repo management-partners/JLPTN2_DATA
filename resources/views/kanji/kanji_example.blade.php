@@ -152,7 +152,7 @@
                                 @method("GET")
                                 @csrf
                                 <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Kanji example">
-                                    <i class="fab fa-jira"></i>
+                                    <i class="fas fa-plus"></i>
                                 </button>
                             </form>
 
