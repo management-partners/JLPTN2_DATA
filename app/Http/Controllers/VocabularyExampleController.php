@@ -91,8 +91,9 @@ class VocabularyExampleController extends Controller
         } else {
             \Session::flash('fail', 'Vocabulary example unsuccessfully created.');
         }
-
-        return redirect()->route('vocabulary-example.index');
+        $vocaEx = VocabularyExample::where('id', $vocaExample->id)->get();
+        
+        return view('vocabulary.vocabulary_example', ['lstVocabularyEx' => VocabularyExampleResource::collection($vocaEx), 'searchCate' => $request->cateId, 'searchChapter' => $request->chapter, 'searchChapterName' => $voca->chapterName, 'searchVoca' => $request->vocaId, 'searchVocaName' => $voca->vocabulary]);
     }
 
     /**
@@ -210,7 +211,10 @@ class VocabularyExampleController extends Controller
             \Session::flash('fail', 'Vocabulary example unsuccessfully updated.');
         }
 
-        return redirect()->route('vocabulary-example.index');
+        $vocaEx = VocabularyExample::where('id', id)->get();
+        $voca = Vocabulary::find($vocaExample->vocaId);
+
+        return view('vocabulary.vocabulary_example', ['lstVocabularyEx' => VocabularyExampleResource::collection($vocaEx), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $voca->chapterName, 'searchVoca' => $vocaExample->vocaId, 'searchVocaName' => $vocaExample->vocabulary]);
     }
 
     /**

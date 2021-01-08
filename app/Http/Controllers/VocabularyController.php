@@ -65,11 +65,12 @@ class VocabularyController extends Controller
      */
     public function store(Request $request)
     {
+        $chapterName = $request->op_chapter_name==null?$request->chapter_name:$request->op_chapter_name;
         $voca = Vocabulary::create([
                 'cateId'        => $request->category,
                 'chapter'       => $request->chapter,
                 'exampleId'     => 0,
-                'chapterName'   => $request->op_chapter_name==null?$request->chapter_name:$request->op_chapter_name,
+                'chapterName'   => $chapterName,
                 'vocabulary'    => $request->vocabulary,
                 'onRead'        => $request->onRead,
                 'mean'          => $request->mean,
@@ -80,8 +81,9 @@ class VocabularyController extends Controller
         } else {
             \Session::flash('fail', 'Vocabulary unsuccessfully created.');
         }
+        $vocabulary = Vocabulary::where('id', $voca->id)->get();
 
-        return redirect()->route('vocabulary.index');
+        return view('vocabulary.vocabulary',['lstVocabulary'=> VocabularyResource::collection($vocabulary), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $chapterName, 'searchVoca' => $voca->id, 'searchVocaName' => $request->vocabulary]);
 
     }
 
@@ -176,7 +178,9 @@ class VocabularyController extends Controller
             \Session::flash('fail', 'Vocabulary unsuccessfully updated.');
         }
 
-        return redirect()->route('vocabulary.index');
+        $vocabulary = Vocabulary::where('id', $voca->id)->get();
+        
+        return view('vocabulary.vocabulary',['lstVocabulary'=> VocabularyResource::collection($vocabulary), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $request->chapter_name, 'searchVoca' => $id, 'searchVocaName' => $request->vocabulary]);
     }
 
     /**
