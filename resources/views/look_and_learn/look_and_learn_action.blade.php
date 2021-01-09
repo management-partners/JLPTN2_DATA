@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Kanji Action Page')
+@section('title', 'Kanji Look And Learn Action Page')
 @section('content')
-<h1> Kanji Action </h1>
+<h1> Kanji Look And Learn Action </h1>
 @if(Session::has('success'))
     <div class="alert alert-success">
         {{ Session::get('success') }}
@@ -11,69 +11,77 @@
         {{ Session::get('fail') }}
     </div>
 @endif
-@if(isset($kanji))
+@if(isset($lookandlearn))
 
-    <form class="action-form" action="{{route('kanji.update',$kanji->id)}}" method="POST">
+    <form class="action-form" action="{{ route('lookandlearn.update',) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
             <label for="id" class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10  floatLeft">
-                <label for="" style="padding-right:50px;">{{ $kanji->id }}</label>
-                @if ($kanji->exampleId != 0)
-                    <a href="{{ route('getKanjiEx', $kanji->id) }}">
-                        Example
-                    </a>
+                <label for="" style="padding-right:50px;"></label>
+                @if($kanji->exampleId != 0)
+                    {{-- <a href="{{ route('getKanjiEx', $kanji->id) }}">
+                    Example
+                    </a> --}}
                 @endif
-                
+
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1" {{ $kanji->cateId == 1 ? 'selected' : '' }}>新完全マスタ</option>
-                    <option value="2" {{ $kanji->cateId == 2 ? 'selected' : '' }}>総まとめ</option>
-                    <option value="3" {{ $kanji->cateId == 3 ? 'selected' : '' }}>耳から覚える</option>
-                </select>
+                <input type="text" class="form-control-plaintext" readonly value="Look And Learn">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
                 <select name="chapter_name" id="chapter" class="form-control select2">
-                    <option value="{{ $kanji->chapter }}" selected="selected">{{ $kanji->chapterName }}</option>
+                    <option value="" selected="selected"></option>
                 </select>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" value="{{ $kanji->kanji }}" />
+                <input type="text" class="form-control" name="kanji" value="" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="formFile" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kani-VN</label>
+            <div class="col-sm-10" id="kanji">
+                <input type="text" class="form-control" name="hanviet" value="" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="descriptionControl" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10" id="descriptionControl">
+                <textarea name="description" id="description" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">On Read</label>
             <div class="col-sm-10" id="useControl">
-                <input type="text" class="form-control" name="onRead" value="{{ $kanji->onRead }}" />
+                <input type="text" class="form-control" name="onRead" value="" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="meanControl" class="col-sm-2 col-form-label">Kun Read</label>
             <div class="col-sm-10" id="meanControl">
-                <input type="text" class="form-control" name="kunRead" value="{{ $kanji->kunRead }}" />
+                <input type="text" class="form-control" name="kunRead" value="" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="descriptionControl" class="col-sm-2 col-form-label">Other Read</label>
             <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="otherRead" value="{{ $kanji->otherRead }}" />
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="descriptionControl" class="col-sm-2 col-form-label">Mean</label>
-            <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="mean" value="{{ $kanji->mean }}" />
+                <input type="text" class="form-control" name="otherRead" value="" />
             </div>
         </div>
         <div class="mb-3 row">
@@ -85,17 +93,13 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{route('kanji.store')}}" method="POST">
+    <form class="action-form" action="{{ route('lookandlearn.store') }}" method="POST">
         @method('POST')
         @csrf
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1">新完全マスタ</option>
-                    <option value="2">総まとめ</option>
-                    <option value="3">耳から覚える</option>
-                </select>
+                <input type="text" class="form-control-plaintext" readonly value="Look And Learn">
             </div>
         </div>
         <div class="mb-3 row">
@@ -125,7 +129,25 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" placeholder="Kanji word"/>
+                <input type="text" class="form-control" name="kanji" placeholder="Kanji word" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="formFile" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kani-VN</label>
+            <div class="col-sm-10" id="kanji">
+                <input type="text" class="form-control" name="hanviet" value="" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="descriptionControl" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10" id="descriptionControl">
+                <textarea name="description" id="description" class="form-control ckeditor"></textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -147,12 +169,6 @@
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="descriptionControl" class="col-sm-2 col-form-label">Mean</label>
-            <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="mean" placeholder="Kanji mean" />
-            </div>
-        </div>
-        <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary col-sm-12">Create</button>
@@ -162,6 +178,13 @@
     </form>
 @endif
 
+@endsection
+@section('style')
+<style rel="stylesheet">
+    #descriptionControl .ck-content {
+        min-height: 100px;
+    }
+</style>
 @endsection
 @section('script')
 <script>
@@ -179,6 +202,21 @@
         }).change();
 
     });
+</script>
+
+<script type="text/javascript">
+    ClassicEditor
+        .create(document.querySelector('#description'), {
+            language: 'ja'
+
+        })
+        .then(editor => {
+
+            window.use = editor;
+        })
+        .catch(err => {
+            console.error(err.stack);
+        });
 </script>
 <script>
     $(document).ready(function() {

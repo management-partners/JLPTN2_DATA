@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Kanji Action Page')
+@section('title', 'Look And Learn Example Action Page')
 @section('content')
-<h1> Kanji Action </h1>
+<h1> Look And Learn Example Action </h1>
 @if(Session::has('success'))
     <div class="alert alert-success">
         {{ Session::get('success') }}
@@ -11,69 +11,65 @@
         {{ Session::get('fail') }}
     </div>
 @endif
-@if(isset($kanji))
-
-    <form class="action-form" action="{{route('kanji.update',$kanji->id)}}" method="POST">
+@if(isset($lookandlearnEx))
+    <form class="action-form" action="{{ route('lookandlearn-example.update', $lookandlearnEx->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
-            <label for="id" class="col-sm-2 col-form-label">ID</label>
+            <label for="id" class="col-sm-2 col-form-label">Example ID</label>
             <div class="col-sm-10  floatLeft">
-                <label for="" style="padding-right:50px;">{{ $kanji->id }}</label>
-                @if ($kanji->exampleId != 0)
-                    <a href="{{ route('getKanjiEx', $kanji->id) }}">
-                        Example
-                    </a>
-                @endif
-                
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $lookandlearnEx->id }}" style="width:10%;" name="id">
+
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
-            <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1" {{ $kanji->cateId == 1 ? 'selected' : '' }}>新完全マスタ</option>
-                    <option value="2" {{ $kanji->cateId == 2 ? 'selected' : '' }}>総まとめ</option>
-                    <option value="3" {{ $kanji->cateId == 3 ? 'selected' : '' }}>耳から覚える</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="4" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" readonly value="Look And Learn" style="width:80%;" name="cateName">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-6">
-                <select name="chapter_name" id="chapter" class="form-control select2">
-                    <option value="{{ $kanji->chapter }}" selected="selected">{{ $kanji->chapterName }}</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $lookandlearnEx->chapter }}" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $lookandlearnEx->chapterName }}" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" value="{{ $kanji->kanji }}" />
+                <input type="text" class="form-control" name="kanji" value="{{ $lookandlearnEx->kanji }}" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kani-VN</label>
+            <div class="col-sm-10" id="kanji">
+                <input type="text" class="form-control" name="kanji" value="{{ $lookandlearnEx->hanviet }}" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">On Read</label>
             <div class="col-sm-10" id="useControl">
-                <input type="text" class="form-control" name="onRead" value="{{ $kanji->onRead }}" />
+                <input type="text" class="form-control" name="onRead" value="{{ $lookandlearnEx->onRead }}" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="meanControl" class="col-sm-2 col-form-label">Kun Read</label>
             <div class="col-sm-10" id="meanControl">
-                <input type="text" class="form-control" name="kunRead" value="{{ $kanji->kunRead }}" />
+                <input type="text" class="form-control" name="kunRead" value="{{ $lookandlearnEx->kunRead }}" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="descriptionControl" class="col-sm-2 col-form-label">Other Read</label>
             <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="otherRead" value="{{ $kanji->otherRead }}" />
+                <input type="text" class="form-control" name="otherRead" value="{{ $lookandlearnEx->otherRead }}" />
             </div>
         </div>
         <div class="mb-3 row">
             <label for="descriptionControl" class="col-sm-2 col-form-label">Mean</label>
             <div class="col-sm-10" id="descriptionControl">
-                <input type="text" class="form-control" name="mean" value="{{ $kanji->mean }}" />
+                <input type="text" class="form-control" name="mean" value="{{ $lookandlearnEx->mean }}" />
             </div>
         </div>
         <div class="mb-3 row">
@@ -85,47 +81,43 @@
         </div>
     </form>
 @else
-    <form class="action-form" action="{{route('kanji.store')}}" method="POST">
+    <form class="action-form" action="{{ route('lookandlearn-example.store') }}" method="POST">
         @method('POST')
         @csrf
         <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
+            <div class="col-sm-10" id="kanji">
+                @if($created)
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="" />
+                @else
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="" />
+                @endif
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
-            <div class="col-sm-4">
-                <select name="category" class="form-select" id="category">
-                    <option value="1">新完全マスタ</option>
-                    <option value="2">総まとめ</option>
-                    <option value="3">耳から覚える</option>
-                </select>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="" style="width:10%;" name="cateId">
+                <input type="text" class="form-control-plaintext float-start" readonly value="" style="width:80%;" name="cateName">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
-            <div class="col-sm-10 floatLeft">
-                <div class="col-sm-8 floatLeft">
-                    <input class="form-check-input" type="checkbox" value="" id="newChapter">
-                    <label class="form-check-label" for="newChapter">
-                        New Chapter
-                    </label>
-                </div>
-                <div id="new" class="col-auto">
-                    <div class="col-sm-2 float-start">
-                        <input type="text" class="form-control" name="chapter" placeholder="chapter" style="margin-bottom:5px;">
-                    </div>
-                    <div class="col-sm-9 float-start" style="margin-left: 5px;">
-                        <input type="text" class="form-control col-sm-10" name="chapter_name" placeholder="Chapter Name">
-                    </div>
-
-                </div>
-                <div id="old" class="col-sm-8">
-                    <select name="chapter" id="chapter" class="form-control select2"></select>
-                    <input type="hidden" name="op_chapter_name" id="op_chapter_name">
-                </div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext float-start" readonly value="" style="width:10%;" name="chapter">
+                <input type="text" class="form-control-plaintext float-start" readonly value="" style="width:80%;" name="chapterName">
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
+            <label for="structsControl" class="col-sm-2 col-form-label">Kanji Example</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" placeholder="Kanji word"/>
+                <input type="text" class="form-control" name="kanji" placeholder="Kanji word" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Kani-VN</label>
+            <div class="col-sm-10" id="kanji">
+                <input type="text" class="form-control" name="kanji" placeholder="Kanji VN" />
             </div>
         </div>
         <div class="mb-3 row">
@@ -157,7 +149,6 @@
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary col-sm-12">Create</button>
             </div>
-
         </div>
     </form>
 @endif
@@ -188,7 +179,7 @@
             minimumInputLength: 0,
             theme: "classic",
             ajax: {
-                url: "{{ route("getKanjiChapterExist") }}",
+                url: "{{ route("getLookChapterEx") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {
@@ -207,8 +198,6 @@
                 },
                 cache: true
             }
-        }).on("change", function(e) {
-            $("#op_chapter_name").val(e.currentTarget.textContent)
         });
     });
 </script>

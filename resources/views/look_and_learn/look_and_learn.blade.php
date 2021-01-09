@@ -1,41 +1,38 @@
 @extends('layouts.app')
-@section('title', 'Kanji Page')
+@section('title', 'Look And Learn Page')
 @section('content')
-<h1> Kanji Page </h1>
+<h1> Look And Learn Page </h1>
 <div class="create-button">
-    <a href="{{ route('kanji.create') }}">
+    <a href="{{ route('lookandlearn.create') }}">
         <span class="menu-text btn btn-primary"> Create New </span>
     </a>
 </div>
 <div class="card">
     <div class="card-header"> Filter</div>
     <div class="card-body">
-        <form action="{{ route("kanji.index") }}">
-            <div class="col-sm-3 float-start">
-                <select name="category" class="form-select" id="category" onChange="this.form.submit()">
-                    <option value="1" {{ $searchCate == 1 ? 'selected' : '' }}>新完全マスタ</option>
-                    <option value="2" {{ $searchCate == 2 ? 'selected' : '' }}>総まとめ</option>
-                    <option value="3" {{ $searchCate == 3 ? 'selected' : '' }}>耳から覚える</option>
-                </select>
+        <form action="{{ route("lookandlearn.index") }}">
+            <div class="mb-3 row float-start space-chapter">
+                <label for="inputPassword" class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" value="4">
+                    <input type="text" class="form-control-plaintext" readonly value="Look And Learn">
+                </div>
             </div>
             <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchChapter))
-                    <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
-
-                    </select>
+                    <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()"></select>
                 @else
                     <select name="chapter" id="chapter" class="form-select select2" onChange="this.form.submit()">
                         <option value="{{ $searchChapter }}" selected="selected">{{ $searchChapterName }}</option>
                     </select>
                 @endif
-
             </div>
             <div class="col-sm-3 float-start space-chapter">
-                @if(!isset($searchKanji))
-                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()"></select>
+                @if(!isset($searchlook))
+                    <select name="lookKanji" id="lookKanji" class="form-select select2" onChange="this.form.submit()"></select>
                 @else
-                    <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()">
-                        <option value="{{ $searchKanji }}" selected="selected">{{ $searchKanjiName }}</option>
+                    <select name="lookKanji" id="lookKanji" class="form-select select2" onChange="this.form.submit()">
+                        <option value="{{ $searchlook }}" selected="selected">{{ $searchLookName }}</option>
                     </select>
                 @endif
 
@@ -61,6 +58,9 @@
             <th scope="col">Category</th>
             <th scope="col">Chapter</th>
             <th scope="col">Kanji</th>
+            <th scope="col">Image</th>
+            <th scope="col">Kanji-VN</th>
+            <th scope="col">Description</th>
             <th scope="col">On Read</th>
             <th scope="col">Kun Read</th>
             <th scope="col">Other Read</th>
@@ -69,16 +69,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($lstKanji as $lst)
+        @foreach($lstLook as $lst)
             <tr>
                 <td>{{ $lst->id }}</td>
                 <td>{{ $lst->category }}</td>
                 <td>{{ $lst->chapterName }}</td>
                 <td>
-                    <a href="{{ URL::route('kanji.show', $lst->id) }}">
+                    <a href="{{ URL::route('lookandlearn.show', $lst->id) }}">
                         {{ $lst->kanji }}
                     </a>
                 </td>
+                <td>{{ $lst->image }}</td>
+                <td>{{ $lst->hanviet }}</td>
+                <td>{{ $lst->description }}</td>
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->kunRead }}</td>
                 <td>{{ $lst->otherRead }}</td>
@@ -86,32 +89,32 @@
                 <td>
                     <div class="action-example">
                         @if($lst->exampleId == 0)
-                            <form action="{{ route('kanji-example.edit', $lst->id) }}" method="GET">
+                            <form action="{{ route('lookandlearn-example.edit', $lst->id) }}" method="GET">
                                 @csrf
-                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Example">
+                                <button type="submit" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Look And Learn Example">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </form>
                         @else
-                            <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
-                                @csrf
-                                <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Example">
-                                    <i class="fas fa-stream"></i>
-                                </button>
-                            </form>
+                            {{-- <form action="{{ route('getKanjiEx', $lst->id) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="View Look And Learn Example">
+                                <i class="fas fa-stream"></i>
+                            </button>
+                            </form> --}}
                         @endif
 
                     </div>
                     <div class="action-edit">
-                        <a href="{{ route('kanji.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji">
+                        <a href="{{ route('lookandlearn.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Look And Learn">
                             <i class="fas fa-pen-square fa-3x"></i>
                         </a>
                     </div>
                     <div class="action-delete">
-                        <form action="{{ route('kanji.destroy', $lst->id) }}" method="POST">
+                        <form action="{{ route('lookandlearn.destroy', $lst->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
-                            <button type="submit" class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Kanji">
+                            <button type="submit" class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Look And Learn">
                                 <i class="fas fa-trash-alt "></i>
                             </button>
                         </form>
@@ -120,20 +123,11 @@
                 </td>
             </tr>
         @endforeach
-
     </tbody>
 </table>
 @endsection
 
 @section('script')
-<script>
-$(document).ready(function(){
-    $("#category").on('change', function(){
-        $("#chapter").val(null).trigger("change")
-        $("#kanjiId").val(null).trigger("change")
-    });
-});
-</script>
 <script>
     $(document).ready(function() {
         $('#chapter').select2({
@@ -142,12 +136,11 @@ $(document).ready(function(){
             allowClear: true,
             theme: "classic",
             ajax: {
-                url: "{{ route("getKanjiChapterExist") }}",
+                url: "{{ route("getLookChapter") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {
                         key: params.term,
-                        cate: $("#category").val(),
                         type: 'public'
                     }
                     return query;
@@ -160,29 +153,26 @@ $(document).ready(function(){
                 cache: true
             }
         }).on("change", function(e) {
-            $("#kanjiId").val(null).trigger("change")
+            $("#lookKanji").val(null).trigger("change")
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-
-        $('#kanjiId').select2({
+        $('#lookKanji').select2({
             placeholder: "Choose kanji...",
             minimumInputLength: 0,
             theme: "classic",
             allowClear: true,
             ajax: {
-                url: "{{ route("getKanjiExist") }}",
+                url: "{{ route("getLookKanji") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {
                         key: params.term,
-                        cate: $("#category").val(),
                         chapter: $("#chapter").val(),
                         type: 'public'
                     }
-
                     // Query parameters will be ?key=[term]&type=public
                     return query;
                 },

@@ -7,6 +7,8 @@ use App\Http\Controllers\KanjiController;
 use App\Http\Controllers\KanjiExampleController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\VocabularyExampleController;
+use App\Http\Controllers\LookAndLearnController;
+use App\Http\Controllers\LookAndLearnExampleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,11 +42,20 @@ Route::get('kanji-example/get-kanji-ex/{id}', [KanjiExampleController::class, "g
 Route::get('kanji-example/search/chapter', [KanjiExampleController::class,"getKanjiExChapterExist"])->name("getKanjiExChapterExist");
 Route::get('kanji/search/kanji', [KanjiExampleController::class,"getKanjiExist"])->name("getKanjiExist");
 
-Route::Resource('vocabulary', VocabularyController::class);
+Route::resource('vocabulary', VocabularyController::class);
 Route::get('vocabulary/search/chapter', [VocabularyController::class,"getVocabularyChapterExist"])->name("getVocabularyChapterExist");
 Route::get('vocabulary/search/voca', [VocabularyController::class,"getVocabularyExist"])->name("getVocabularyExist");
 
-Route::Resource('vocabulary-example', VocabularyExampleController::class);
+Route::resource('vocabulary-example', VocabularyExampleController::class);
 Route::get('vocabulary-example/search/{id}', [VocabularyExampleController::class,"getVocabularyEx"])->name('getVocabularyEx');
 Route::get('vocabulary-example/example/search', [VocabularyExampleController::class,"getVocaExChapter"])->name("getVocaExChapter");
 Route::get('vocabulary/search/voca-ex', [VocabularyExampleController::class,"getVocabularyExExist"])->name("getVocabularyExExist");
+
+Route::resource('lookandlearn', LookAndLearnController::class);
+Route::get('lookandlearn/search/chapter', [LookAndLearnController::class,"getLookChapter"])->name('getLookChapter');
+Route::get('lookandlearn/search/kanji', [LookAndLearnController::class,"getLookKanji"])->name('getLookKanji');
+
+
+Route::resource('lookandlearn-example', LookAndLearnExampleController::class);
+Route::get('lookandlearn-example/search/chapterEx', [LookAndLearnExampleController::class,"getLookChapterEx"])->name('getLookChapterEx');
+Route::get('lookandlearn-example/search/kanji', [LookAndLearnExampleController::class,"getLookKanjiEx"])->name('getLookKanjiEx');
