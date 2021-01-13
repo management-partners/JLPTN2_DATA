@@ -39,7 +39,9 @@ class VocabularyController extends Controller
                 $chapterName    = $vocabulary[0]->chapterName;
             }
         } else {
-            $vocabulary = Vocabulary::where('cateId', 1)->get();
+            $chapter =1;
+            $chapterName = Vocabulary::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $vocabulary = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
         }
         

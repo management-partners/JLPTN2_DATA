@@ -35,8 +35,11 @@ class KanjiController extends Controller
         } elseif (isset($cate)) {
             $lstKanji = Kanji::where('cateId', $cate)->get();
         }else {
-            $lstKanji = Kanji::where('cateId', 1)->get();
+            $chapter  = 1;
+            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $lstKanji = Kanji::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
+            
         }
 
         $kanjiName = '';

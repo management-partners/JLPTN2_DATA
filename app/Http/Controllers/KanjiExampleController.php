@@ -41,7 +41,9 @@ class KanjiExampleController extends Controller
                 $cate = 1;
             }
         } else {
-            $lstKaniEx = KanjiExample::where('cateId', 1)->get();
+            $chapter = 1;
+            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $lstKaniEx = KanjiExample::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
         }
         $kanjiName = '';
