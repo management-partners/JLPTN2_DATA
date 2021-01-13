@@ -60,7 +60,7 @@
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col" style="width:16%">Action</th>
+                <th scope="col" class="col-action">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -125,7 +125,7 @@
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
                 <th scope="col">Mean</th>
-                <th scope="col" style="width:16%">Action</th>
+                <th scope="col" class="col-action">Action</th>
             </tr>
         </thead>
         <tbody>

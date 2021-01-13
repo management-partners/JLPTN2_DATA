@@ -55,3 +55,6 @@ a:hover{
     background-color: green !important;
     color: #fff;
 }
+.col-action{
+    width: 19%;
+}

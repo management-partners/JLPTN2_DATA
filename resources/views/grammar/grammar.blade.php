@@ -54,7 +54,7 @@
             <th scope="col" style="width:10%;">Use</th>
             <th scope="col">Mean</th>
             <th scope="col">Description</th>
-            <th scope="col" style="width:12%;">Action</th>
+            <th scope="col" class="col-action">Action</th>
         </tr>
     </thead>
     <tbody>

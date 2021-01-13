@@ -56,7 +56,7 @@
             <th scope="col">Content</th>
             <th scope="col">Read</th>
             <th scope="col">Mean</th>
-            <th scope="col" style="width:12%">Action</th>
+            <th scope="col" class="col-action">Action</th>
         </tr>
     </thead>
     <tbody>
