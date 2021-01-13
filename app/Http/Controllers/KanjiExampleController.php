@@ -178,11 +178,12 @@ class KanjiExampleController extends Controller
      */
     public function edit($id)
     {
-        $kanji = KanjiExample::find($id);
-        if (!isset($kanji)) {
+        $kanji = KanjiExample::where('kanjiId',$id)->get();
+
+        if ($kanji) {
             $kanji = Kanji::find($id);
-        }
-        
+            
+        } 
         return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji),'created'=>false]);
     }
 
