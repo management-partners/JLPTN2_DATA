@@ -78,6 +78,7 @@ class KanjiExampleController extends Controller
                 'cateId' => $request->cateId,
                 'chapter' => $request->chapter,
                 'content' => $request->kanji,
+                'hanviet' => $request->hanviet,
                 'onRead' => $request->onRead,
                 'kunRead' => $request->kunRead,
                 'otherRead' => $request->otherRead,
@@ -204,6 +205,7 @@ class KanjiExampleController extends Controller
         $kanjiExample->cateId = $request->cateId;
         $kanjiExample->chapter = $request->chapter;
         $kanjiExample->content = $request->kanji;
+        $kanjiExample->hanviet = $request->hanviet;
         $kanjiExample->onRead = $request->onRead;
         $kanjiExample->kunRead = $request->kunRead;
         $kanjiExample->otherRead = $request->otherRead;

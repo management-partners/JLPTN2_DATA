@@ -44,6 +44,12 @@
             </div>
         </div>
         <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="hanviet">
+                <input type="text" class="form-control" name="hanviet" value="{{ $kanjiEx->hanviet }}" />
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">On Read</label>
             <div class="col-sm-10" id="useControl">
                 <input type="text" class="form-control" name="onRead" value="{{ $kanjiEx->onRead }}" />
@@ -109,6 +115,12 @@
             <label for="structsControl" class="col-sm-2 col-form-label">Kanji Example</label>
             <div class="col-sm-10" id="kanji">
                 <input type="text" class="form-control" name="kanji" placeholder="Kanji word" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="hanviet">
+                <input type="text" class="form-control" name="hanviet" placeholder="Han viet" />
             </div>
         </div>
         <div class="mb-3 row">

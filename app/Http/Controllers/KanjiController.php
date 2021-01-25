@@ -90,6 +90,7 @@ class KanjiController extends Controller
                 'chapter'     => $request->chapter,
                 'chapterName' => $chapterName,
                 'kanji'       => $request->kanji,
+                'hanviet'     => $request->hanviet,
                 'onRead'      => $request->onRead,
                 'kunRead'     => $request->kunRead,
                 'otherRead'   => $request->otherRead,
@@ -172,6 +173,7 @@ class KanjiController extends Controller
         $kanji->chapter     = $chapter;
         $kanji->chapterName = $chapterN;
         $kanji->kanji       = $request->kanji;
+        $kanji->hanviet     = $request->hanviet;
         $kanji->onRead      = $request->onRead;
         $kanji->kunRead     = $request->kunRead;
         $kanji->otherRead   = $request->otherRead;

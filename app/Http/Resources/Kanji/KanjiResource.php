@@ -22,6 +22,7 @@ class KanjiResource extends JsonResource
             'chapter'       => $this->chapter,
             'chapterName'   => $this->chapterName,
             'kanji'         => $this->kanji,
+            'hanviet'       => $this->hanviet,
             'onRead'        => $this->onRead,
             'kunRead'       => $this->kunRead,
             'otherRead'     => $this->otherRead,

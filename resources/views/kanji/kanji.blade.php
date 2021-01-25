@@ -61,6 +61,7 @@
             <th scope="col">Category</th>
             <th scope="col">Chapter</th>
             <th scope="col">Kanji</th>
+            <th scope="col">Han Viet</th>
             <th scope="col">On Read</th>
             <th scope="col">Kun Read</th>
             <th scope="col">Other Read</th>
@@ -79,6 +80,7 @@
                         {{ $lst->kanji }}
                     </a>
                 </td>
+                <td>{{ $lst->hanviet }}</td>
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->kunRead }}</td>
                 <td>{{ $lst->otherRead }}</td>

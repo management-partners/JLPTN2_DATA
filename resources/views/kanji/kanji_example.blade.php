@@ -56,6 +56,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">Chapter</th>
                 <th scope="col">Content</th>
+                <th scope="col">Han Viet</th>
                 <th scope="col">On Read</th>
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
@@ -73,6 +74,9 @@
                         <a href="{{ route('kanji-example.show', $lst->id) }}">
                             {{ $lst->content }}
                         </a>
+                    </td>
+                     <td>
+                        {{ $lst->hanviet }}
                     </td>
                     <td>
                         {{ $lst->onRead }}
@@ -121,6 +125,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">Chapter</th>
                 <th scope="col">Content</th>
+                <th scope="col">Han Viet</th>
                 <th scope="col">On Read</th>
                 <th scope="col">Kun Read</th>
                 <th scope="col">Other Read</th>
@@ -138,6 +143,9 @@
                         <a href="{{ route('kanji-example.show', $lst->id) }}">
                             {{ $lst->content }}
                         </a>
+                    </td>
+                     <td>
+                        {{ $lst->hanviet }}
                     </td>
                     <td>
                         {{ $lst->onRead }}

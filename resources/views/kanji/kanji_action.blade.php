@@ -53,11 +53,18 @@
             </div>
         </div>
         <div class="mb-3 row">
+            <label for="useControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="useControl">
+                <input type="text" class="form-control" name="hanviet" value="{{ $kanji->hanviet }}" />
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label for="useControl" class="col-sm-2 col-form-label">On Read</label>
             <div class="col-sm-10" id="useControl">
                 <input type="text" class="form-control" name="onRead" value="{{ $kanji->onRead }}" />
             </div>
         </div>
+        
         <div class="mb-3 row">
             <label for="meanControl" class="col-sm-2 col-form-label">Kun Read</label>
             <div class="col-sm-10" id="meanControl">
@@ -126,6 +133,12 @@
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
                 <input type="text" class="form-control" name="kanji" placeholder="Kanji word"/>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="hanviet">
+                <input type="text" class="form-control" name="hanviet" placeholder="Han Viet"/>
             </div>
         </div>
         <div class="mb-3 row">
