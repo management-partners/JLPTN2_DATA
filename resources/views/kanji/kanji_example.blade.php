@@ -24,7 +24,7 @@
                 @endif
 
             </div>
-            <div class="col-sm-3 float-start space-chapter">
+            {{-- <div class="col-sm-3 float-start space-chapter">
                 @if(!isset($searchKanji))
                     <select name="kanjiId" id="kanjiId" class="form-select select2" onChange="this.form.submit()"></select>
                 @else
@@ -33,7 +33,7 @@
                     </select>
                 @endif
 
-            </div>
+            </div> --}}
         </form>
     </div>
 </div>
@@ -242,12 +242,10 @@ $(document).ready(function(){
                 },
                 cache: true
             }
-        }).on("change", function(e) {
-            $("#kanjiId").val(null).trigger("change")
         });
     });
 </script>
-<script>
+{{-- <script>
     $(document).ready(function() {
 
         $('#kanjiId').select2({
@@ -256,7 +254,7 @@ $(document).ready(function(){
             theme: "classic",
             allowClear: true,
             ajax: {
-                url: "{{ route("getKanjiExist") }}",
+                url: "{{ route("getKanjiExExist") }}",
                 dataType: 'json',
                 data: function(params) {
                     var query = {
@@ -278,5 +276,5 @@ $(document).ready(function(){
             }
         });
     });
-</script>
+</script> --}}
 @endsection
