@@ -15,8 +15,9 @@ class KanjiExampleResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'autoId'    => $this->autoId,
             'id'        => $this->id,
-            'cateId'  => $this->cateId,
+            'cateId'    => $this->cateId,
             'chapterName' => $this->chapterName,
             'content'   => $this->content,
             'hanviet'   => $this->hanviet,

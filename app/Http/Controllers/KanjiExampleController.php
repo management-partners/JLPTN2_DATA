@@ -103,9 +103,12 @@ class KanjiExampleController extends Controller
      */
     public function show($id)
     {
-        $kanjiEx = KanjiExample::find($id);
+        $autoId = $id;
+        $kanjiEx = KanjiExample::where('autoId',$id)->get();
 
-        return view('kanji.kanji_example_action', ['kanjiEx' => new KanjiExampleResource($kanjiEx)]);
+        
+
+        return view('kanji.kanji_example_action', ['kanjiEx' => new KanjiExampleResource($kanjiEx[0])]);
     }
 
     /**
@@ -175,13 +178,13 @@ class KanjiExampleController extends Controller
      */
     public function edit($id)
     {
-        $kanji = KanjiExample::where('kanjiId',$id)->get();
+        $kanjiEx = KanjiExample::where('autoId',$id)->get();
 
-        if ($kanji) {
-            $kanji = Kanji::find($id);
+        // if ($kanjiEx == null) {
+        //     $kanjiEx = Kanji::find($id);
             
-        } 
-        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanji),'created'=>false]);
+        // } 
+        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanjiEx),'created'=>false]);
     }
 
     /**
@@ -193,18 +196,18 @@ class KanjiExampleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kanjiExample = KanjiExample::find($id);
-        
-        // $kanjiExample->kanjiId = $request->kanjiId;
-        $kanjiExample->cateId = $request->cateId;
-        $kanjiExample->chapter = $request->chapter;
-        $kanjiExample->content = $request->kanji;
-        $kanjiExample->hanviet = $request->hanviet;
-        $kanjiExample->onRead = $request->onRead;
-        $kanjiExample->kunRead = $request->kunRead;
-        $kanjiExample->otherRead = $request->otherRead;
-        $kanjiExample->mean = $request->mean;
-        $result = $kanjiExample->update();
+        $kanjiExample = KanjiExample::where('autoId',$id)->get()[0];
+        $result = KanjiExample::where('autoId', $id)->update([
+                'cateId' => $request->cateId,
+                'chapter' => $request->chapter,
+                'content' => $request->kanji,
+                'hanviet' => $request->hanviet,
+                'onRead' => $request->onRead,
+                'kunRead' => $request->kunRead,
+                'otherRead' => $request->otherRead,
+                'mean' => $request->mean,
+            ]);
+
         if ($result) {
             \Session::flash('success', 'Kanji example successfully updated.');
         } else {

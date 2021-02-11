@@ -67,7 +67,7 @@
         <tbody>
             @foreach($lstKanjiEx as $lst)
                 <tr>
-                    <td>{{ $lst->id }}</td>
+                    <td>{{ $lst->autoId }}</td>
                     <td>{{ $lst->category }}</td>
                     <td>{{ $lst->chapterName }}</td>
                     <td>
@@ -87,7 +87,7 @@
                     <td>
                         <div class="action-example">
                             <form action="{{ route('kanji-example.create') }}" method="POST">
-                                <input type="hidden" name="kanjiId" value="{{ $lst->kanjiId }}">
+                                <input type="hidden" name="kanjiId" value="{{ $lst->autoId }}">
                                 @method("GET")
                                 @csrf
                                 <button type="submit" class="btn btn-warning"  data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">
@@ -97,12 +97,12 @@
 
                         </div>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Kanji example">
+                            <a href="{{ route('kanji-example.show', $lst->autoId) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Kanji example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST">
+                            <form action="{{ route('kanji-example.destroy', $lst->autoId) }}" method="POST">
                                 @method("DELETE")
                                 @csrf
                                 <button class="btn btn-danger" onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete kanji example">
@@ -136,7 +136,7 @@
         <tbody>
             @foreach($lstKanji as $lst)
                 <tr>
-                    <td>{{ $lst->id }}</td>
+                    <td>{{ $lst->autoId }}</td>
                     <td>{{ $lst->category }}</td>
                     <td>{{ $lst->chapterName }}</td>
                     <td>
@@ -166,12 +166,12 @@
 
                         </div>
                         <div class="action-edit">
-                            <a href="{{ route('kanji-example.show', $lst->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">
+                            <a href="{{ route('kanji-example.show', $lst->autoId) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">
                                 <i class="fas fa-pen-square fa-3x"></i>
                             </a>
                         </div>
                         <div class="action-delete">
-                            <form action="{{ route('kanji-example.destroy', $lst->id) }}" method="POST" >
+                            <form action="{{ route('kanji-example.destroy', $lst->autoId) }}" method="POST" >
                                 @method("DELETE")
                                 @csrf
                                 <button class="btn btn-danger"  onClick="return confirm('Do you want delete?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete kanji example">
