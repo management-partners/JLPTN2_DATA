@@ -87,7 +87,7 @@
                     <td>
                         <div class="action-example">
                             <form action="{{ route('kanji-example.create') }}" method="POST">
-                                <input type="hidden" name="kanjiId" value="{{ $lst->autoId }}">
+                                <input type="hidden" name="kanjiId" value="{{ $lst->id }}">
                                 @method("GET")
                                 @csrf
                                 <button type="submit" class="btn btn-warning"  data-bs-toggle="tooltip" data-bs-placement="top" title="View Kanji example">

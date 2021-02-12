@@ -89,7 +89,7 @@
             <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
             <div class="col-sm-10" id="kanji">
                 @if($created)
-                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->autoId }}" />
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
                 @else
                     <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
                 @endif
