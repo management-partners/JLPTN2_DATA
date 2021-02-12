@@ -28,14 +28,16 @@ class KanjiController extends Controller
             $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
 
         } elseif (isset($chapter) && $chapter != 0 && isset($cate)) {
+            
             $lstKanji = Kanji::where('cateId', $cate)->where('chapter', $chapter)->get();
-            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $chapterName = $lstKanji[0]->chapterName;
             
         } elseif (isset($cate)&& $kanjiId != 0) {
             $lstKanji = Kanji::where('cateId', $cate)->where('id', $kanjiId)->get();
         } elseif (isset($cate)) {
             $lstKanji = Kanji::where('cateId', $cate)->get();
         }else {
+            
             $chapter  = 1;
             $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
             $lstKanji = Kanji::where('cateId', 1)->where('chapter', $chapter)->get();
@@ -142,7 +144,7 @@ class KanjiController extends Controller
         } else {
             $kanjiEx = Kanji::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
         }
-
+       
         return ['results' => KanjiChapterResource::collection($kanjiEx)];
     }
 

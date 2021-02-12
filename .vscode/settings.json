@@ -12,7 +12,7 @@
             "driver": "SQLite",
             "name": "backup",
             "group": "backup",
-            "database": "${workspaceFolder:UpdateDataJLPTN2}/public/assets/FlutterDB copy.db"
+            "database": "/Volumes/DATA/SRC/FLUTTER/JLPTN2/assets/FlutterDB.db"
         }
     ],
     "sqltools.useNodeRuntime": true

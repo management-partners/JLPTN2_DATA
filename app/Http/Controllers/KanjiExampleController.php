@@ -71,18 +71,21 @@ class KanjiExampleController extends Controller
     public function store(Request $request)
     {
         $kanjiExample = KanjiExample::create([
-                'cateId' => $request->cateId,
-                'chapter' => $request->chapter,
-                'content' => $request->kanji,
-                'hanviet' => $request->hanviet,
-                'onRead' => $request->onRead,
-                'kunRead' => $request->kunRead,
+                'id'       => $request->kanjiId,
+                'cateId'   => $request->cateId,
+                'chapter'  => $request->chapter,
+                'content'  => $request->kanji,
+                'hanviet'  => $request->hanviet,
+                'onRead'   => $request->onRead,
+                'kunRead'  => $request->kunRead,
                 'otherRead' => $request->otherRead,
-                'mean' => $request->mean,
+                'mean'      => $request->mean,
+                'isolation' => 0
             ]);
-        $kanji = Kanji::find($request->id);
+            
+        $kanji = Kanji::find($request->kanjiId);
         if ($kanji->exampleId == 0) {
-            $kanji->exampleId = $kanjiExample->id;
+            $kanji->exampleId = $kanjiExample->autoId;
             $kanji->update();
         }
         if ($kanjiExample) {
@@ -91,7 +94,7 @@ class KanjiExampleController extends Controller
             \Session::flash('fail', 'Kanji example unsuccessfully created.');
         }
 
-        return view('kanji.kanji_example', ['lstKanjiEx' => KanjiExampleResource::collection($kanjiEx), 'searchCate' => $chapter->cateId, 'searchChapter' => $chapter->chapter, 'searchChapterName' => $chapter->chapterName]);
+        return view('kanji.kanji_example', ['lstKanjiEx' => KanjiExampleResource::collection($kanjiExample), 'searchCate' => $chapter->cateId, 'searchChapter' => $chapter->chapter, 'searchChapterName' => $chapter->chapterName]);
     }
 
     /**
@@ -178,12 +181,13 @@ class KanjiExampleController extends Controller
      */
     public function edit($id)
     {
-        $kanjiEx = KanjiExample::where('autoId',$id)->get();
-
-        // if ($kanjiEx == null) {
-        //     $kanjiEx = Kanji::find($id);
-            
-        // } 
+        
+        $kanjiEx = KanjiExample::where('id',$id)->get();
+        
+        if (count($kanjiEx) == 0) {
+            $kanjiEx = Kanji::find($id);            
+        } 
+        
         return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanjiEx),'created'=>false]);
     }
 
