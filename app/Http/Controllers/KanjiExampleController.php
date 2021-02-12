@@ -26,11 +26,13 @@ class KanjiExampleController extends Controller
         if (isset($cate)) {
             if ($chapter != 0 && $cate != 0 && $kanjiId != 0) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $chapter)->where('kanjiId', $kanjiId)->get();
-                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                $chapterName = Kanji::where('cateId', $cate)->where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+               
 
-            } elseif ($chapter != 0) {
-                $lstKaniEx = KanjiExample::where('chapter', $chapter)->get();
-                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            } elseif ($cate != 0 && $chapter != 0) {
+                $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $chapter)->get();
+                $chapterName = Kanji::where('cateId', $cate)->where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                
 
             } elseif ($cate != 0 && $kanjiId != 0) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->where('kanjiId', $kanjiId)->get();
