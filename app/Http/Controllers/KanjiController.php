@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Kanji\KanjiChapterResource;
 use App\Http\Resources\Kanji\KanjiResource;
-use App\Http\Resources\Kanji\KanjiNameResource;
 use App\Models\Kanji;
 use App\Models\KanjiExample;
 use Illuminate\Http\Request;
@@ -20,39 +19,34 @@ class KanjiController extends Controller
     {  
         $chapter = $request->chapter;
         $cate = $request->category;
-        $kanjiId = $request->kanjiId!=null ? $request->kanjiId: 0;
+        $kanjiId = $request->kanjiId;
         $chapterName = '';
         $lstKanji = [];
         if (isset($chapter) && $chapter != 0 && isset($cate) && $kanjiId != 0) {
             $lstKanji = Kanji::where('cateId', $cate)->where('chapter', $chapter)->where('id', $kanjiId)->get();
-            $chapterName = $lstKanji[0]->chapterName;
-            // $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
 
         } elseif (isset($chapter) && $chapter != 0 && isset($cate)) {
-            
             $lstKanji = Kanji::where('cateId', $cate)->where('chapter', $chapter)->get();
-            $chapterName = $lstKanji[0]->chapterName;
+            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
             
         } elseif (isset($cate)&& $kanjiId != 0) {
             $lstKanji = Kanji::where('cateId', $cate)->where('id', $kanjiId)->get();
         } elseif (isset($cate)) {
             $lstKanji = Kanji::where('cateId', $cate)->get();
         }else {
-            
             $chapter  = 1;
             $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
             $lstKanji = Kanji::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
             
         }
-        
+
         $kanjiName = '';
-        if ($kanjiId != 0) {
-            $kanjiName = Kanji::where('id', $kanjiId)->get('kanji')[0]['kanji'];
-            var_dump($kanjiName);
+        if (isset($kanjiId)) {
+            $kanjiName = Kanji::where('id', $kanjiId)->get('kanji')->first()->kanji;
         }
         
-
         return view('kanji.kanji', ['lstKanji' => KanjiResource::collection($lstKanji), 'searchCate' => $cate, 'searchChapter' => $chapter, 'searchChapterName' => $chapterName, 'searchKanji' => $kanjiId, 'searchKanjiName' => $kanjiName]);
     }
 
@@ -145,7 +139,7 @@ class KanjiController extends Controller
         } else {
             $kanjiEx = Kanji::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
         }
-       
+
         return ['results' => KanjiChapterResource::collection($kanjiEx)];
     }
 
@@ -214,35 +208,4 @@ class KanjiController extends Controller
             \Session::flash('fail', 'Kanji unsuccessfully deleted.');
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getKanjiExist(Request $request)
-    {
-        $search = $request->search;
-        $chapter = $request->chapter;
-        $cate = $request->cate;
-        $kanjiId = $request->search!= null ? $result->search : 0;
-        $kanjiName = '';
-
-        $kanjiEx = [];
-        if (isset($search)) {
-            $kanjiEx = Kanji::where('cateId', $cate)->where('chapter', $chapter)->where('kanji', 'LIKE', '%'.$search.'%')->get(['id', 'kanji']);
-            
-        } else {
-            $kanjiEx = Kanji::where('cateId', $cate)->where('chapter', $chapter)->get(['id', 'kanji']);
-            
-        }
-        if($kanjiId != 0){
-            $kanjiName = Kanji::find($kanjiId)->get('kanji');
-        }
-        
-        
-        return ['results' => KanjiNameResource::collection($kanjiEx), 'searchKanji' => $kanjiId, 'searchKanjiName' => $kanjiName];
-    }
-
-    
 }

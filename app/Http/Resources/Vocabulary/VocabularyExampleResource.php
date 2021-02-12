@@ -16,7 +16,6 @@ class VocabularyExampleResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'vocalId'   => $this->vocalId,
             'cateId'    => $this->cateId,
             'chapter'   => $this->chapter,
             'chapterEx' => $this->chapterEx,

@@ -180,7 +180,7 @@ class VocabularyController extends Controller
             \Session::flash('fail', 'Vocabulary unsuccessfully updated.');
         }
 
-        $vocabulary = Vocabulary::where('id', $id)->get();
+        $vocabulary = Vocabulary::where('id', $voca->id)->get();
         
         return view('vocabulary.vocabulary',['lstVocabulary'=> VocabularyResource::collection($vocabulary), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $request->chapter_name, 'searchVoca' => $id, 'searchVocaName' => $request->vocabulary]);
     }

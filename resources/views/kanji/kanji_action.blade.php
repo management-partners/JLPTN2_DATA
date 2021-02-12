@@ -41,7 +41,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-6">
-                <select name="chapter_name" id="chapter" class="form-control select2" required>
+                <select name="chapter_name" id="chapter" class="form-control select2">
                     <option value="{{ $kanji->chapter }}" selected="selected">{{ $kanji->chapterName }}</option>
                 </select>
             </div>
@@ -119,7 +119,7 @@
                         <input type="text" class="form-control" name="chapter" placeholder="chapter" style="margin-bottom:5px;">
                     </div>
                     <div class="col-sm-9 float-start" style="margin-left: 5px;">
-                        <input type="text" class="form-control col-sm-10" name="chapter_name" placeholder="Chapter Name" required>
+                        <input type="text" class="form-control col-sm-10" name="chapter_name" placeholder="Chapter Name">
                     </div>
 
                 </div>

@@ -11,14 +11,15 @@
         {{ Session::get('fail') }}
     </div>
 @endif
-@if(isset($kanjiEx)) 
-    <form class="action-form" action="{{ route('kanji-example.update', $kanjiEx->autoId) }}" method="POST">
+@if(isset($kanjiEx))
+
+    <form class="action-form" action="{{ route('kanji-example.update', $kanjiEx->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3 row">
             <label for="id" class="col-sm-2 col-form-label">Example ID</label>
             <div class="col-sm-10  floatLeft">
-                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->autoId }}" style="width:10%;" name="id">
+                <input type="text" class="form-control-plaintext float-start" readonly value="{{ $kanjiEx->id }}" style="width:10%;" name="id">
 
             </div>
         </div>
@@ -81,7 +82,6 @@
         </div>
     </form>
 @else
-
     <form class="action-form" action="{{ route('kanji-example.store') }}" method="POST">
         @method('POST')
         @csrf
@@ -89,7 +89,7 @@
             <label for="structsControl" class="col-sm-2 col-form-label">Kanji ID</label>
             <div class="col-sm-10" id="kanji">
                 @if($created)
-                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
+                    <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->kanjiId }}" />
                 @else
                     <input type="text" class="form-control-plaintext" name="kanjiId" readonly value="{{ $edit->id }}" />
                 @endif

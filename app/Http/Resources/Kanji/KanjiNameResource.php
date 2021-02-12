@@ -16,7 +16,7 @@ class KanjiNameResource extends JsonResource
     {
         return [
             'id'    => $this->id,
-            'text'  => $this->kanji,
+            'text' => $this->kanji,
         ];
     }
 }

@@ -200,22 +200,21 @@ class VocabularyExampleController extends Controller
     public function update(Request $request, $id)
     {
         $vocaExample = VocabularyExample::find($id);
-        $result = $vocaExample->update([
+        $vocaExample = $vocaExample->update([
             'cateId' => $request->category,
             'chapter' => $request->chapter,
             'content' => $request->content,
             'onRead' => $request->onRead,
             'mean' => $request->mean,
         ]);
-        if ($result) {
+        if ($vocaExample) {
             \Session::flash('success', 'Vocabulary example successfully updated.');
         } else {
             \Session::flash('fail', 'Vocabulary example unsuccessfully updated.');
         }
-        
-        $vocaEx = VocabularyExample::where('id',$id)->get();
-        
-        $voca = Vocabulary::find($id);
+
+        $vocaEx = VocabularyExample::where('id', id)->get();
+        $voca = Vocabulary::find($vocaExample->vocaId);
 
         return view('vocabulary.vocabulary_example', ['lstVocabularyEx' => VocabularyExampleResource::collection($vocaEx), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $voca->chapterName, 'searchVoca' => $vocaExample->vocaId, 'searchVocaName' => $vocaExample->vocabulary]);
     }
