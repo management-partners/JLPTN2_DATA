@@ -81,6 +81,7 @@
         </div>
     </form>
 @else
+
     <form class="action-form" action="{{ route('kanji-example.store') }}" method="POST">
         @method('POST')
         @csrf

@@ -26,11 +26,13 @@ class KanjiExampleController extends Controller
         if (isset($cate)) {
             if ($chapter != 0 && $cate != 0) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->where('chapter', $chapter)->get();
-                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                // $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                $chapterName = $lstKaniEx[0]->chapterName;
 
             } elseif ($chapter != 0) {
                 $lstKaniEx = KanjiExample::where('chapter', $chapter)->get();
-                $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                // $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+                $chapterName = $lstKaniEx[0]->chapterName;
 
             } elseif ($cate != 0 ) {
                 $lstKaniEx = KanjiExample::where('cateId', $cate)->get();
@@ -84,6 +86,8 @@ class KanjiExampleController extends Controller
             ]);
             
         $kanji = Kanji::find($request->kanjiId);
+        
+
         if ($kanji->exampleId == 0) {
             $kanji->exampleId = $kanjiExample->autoId;
             $kanji->update();
@@ -182,13 +186,13 @@ class KanjiExampleController extends Controller
     public function edit($id)
     {
         
-        $kanjiEx = KanjiExample::where('id',$id)->get();
+        $kanjiEx = KanjiExample::where('autoId',$id)->get();
         
         if (count($kanjiEx) == 0) {
             $kanjiEx = Kanji::find($id);            
         } 
         
-        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanjiEx),'created'=>false]);
+        return view('kanji.kanji_example_action', ['edit' => new KanjiExampleResource($kanjiEx[0]),'created'=>false]);
     }
 
     /**
