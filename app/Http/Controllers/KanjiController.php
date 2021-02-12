@@ -25,7 +25,8 @@ class KanjiController extends Controller
         $lstKanji = [];
         if (isset($chapter) && $chapter != 0 && isset($cate) && $kanjiId != 0) {
             $lstKanji = Kanji::where('cateId', $cate)->where('chapter', $chapter)->where('id', $kanjiId)->get();
-            $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
+            $chapterName = $lstKanji[0]->chapterName;
+            // $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
 
         } elseif (isset($chapter) && $chapter != 0 && isset($cate)) {
             
