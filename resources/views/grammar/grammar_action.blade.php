@@ -92,7 +92,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10 floatLeft">
-                <div class="col-sm-2 floatLeft">
+                <div class="floatLeft">
                     <input class="form-check-input" type="checkbox" value="" id="newChapter">
                     <label class="form-check-label" for="newChapter">
                         New Chapter
