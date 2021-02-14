@@ -56,7 +56,7 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
             <div class="col-sm-10" id="hanviet">
-                <input type="text" class="form-control" name="hanviet" placeholder="Han viet word" />
+                <input type="text" class="form-control" name="hanviet" placeholder="Han viet word"  value="{{$voca->hanviet}}"/>
             </div>
         </div>
         <div class="mb-3 row">
