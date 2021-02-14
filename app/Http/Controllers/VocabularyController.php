@@ -42,7 +42,7 @@ class VocabularyController extends Controller
             
             $chapter =1;
             $cate = 1;
-            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName');
+            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName')[0]->chapterName;
             $vocabulary = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get();
             
         }
