@@ -57,6 +57,7 @@
             <th scope="col">Category</th>
             <th scope="col">Chapter</th>
             <th scope="col">Vocabulary</th>
+            <th scope="col">Hanviet</th>
             <th scope="col"> Read</th>
             <th scope="col">Mean</th>
             <th scope="col" class="col-action">Action</th>
@@ -74,6 +75,7 @@
                     </a>
 
                 </td>
+                <td>{{ $lst->hanviet }}</td>
                 <td>{{ $lst->onRead }}</td>
                 <td>{{ $lst->mean }}</td>
                 <td>

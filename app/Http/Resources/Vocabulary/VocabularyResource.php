@@ -21,6 +21,7 @@ class VocabularyResource extends JsonResource
             'chapteName'=> $this->chapterName,
             'lesson'    => $this->lesson,
             'vocabulary'=> $this->vocabulary,
+            'hanviet'   => $this->hanviet,
             'onRead'    => $this->onRead,
             'mean'      => $this->mean,
         ];

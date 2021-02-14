@@ -25,11 +25,12 @@ class GrammarController extends Controller
         if (isset($search) && $search != 0 && isset($cate)) {
             $grammar = Grammar::where('cateId', $cate)->where('chapter', $search)->get();
             $chapter = $search;
-            $chapterName = Grammar::where('chapter', $search)->get('chapterName')->first()->chapterName;
+            $chapterName = Grammar::where('cateId', $cate)->where('chapter', $search)->get('chapterName')->first()->chapterName;
         } elseif (isset($search) && $search != 0) {
-            $grammar = Grammar::where('chapter', $search)->get();
             $chapter = $search;
-            $chapterName = Grammar::where('chapter', $search)->get('chapterName')->first()->chapterName;
+            $cate = 1;
+            $grammar = Grammar::where('cateId', $cate)->where('chapter', $search)->get();
+            $chapterName = Grammar::where('cateId', $cate)->where('chapter', $search)->get('chapterName')->first()->chapterName;
         } elseif (isset($cate)) {
             $grammar = Grammar::where('cateId', $cate)->get();
         } else {

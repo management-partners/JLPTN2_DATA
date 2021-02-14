@@ -16,7 +16,7 @@ class VocabularyChapterResource extends JsonResource
     {
         return [
             'id'    => $this->chapter,
-            'text'   => $this->chapterName,
+            'text'  => $this->chapterName,
         ];
     }
 }

@@ -54,6 +54,12 @@
             </div>
         </div>
         <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="hanviet">
+                <input type="text" class="form-control" name="hanviet" placeholder="Han viet word" />
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label for="meanControl" class="col-sm-2 col-form-label">Read</label>
             <div class="col-sm-10" id="meanControl">
                 <input type="text" class="form-control" name="onRead" value="{{ $voca->onRead }}" />
@@ -90,7 +96,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Chapter</label>
             <div class="col-sm-10 floatLeft">
-                <div class="col-sm-2 floatLeft">
+                <div class="col-sm-6 floatLeft">
                     <input class="form-check-input" type="checkbox" value="" id="newChapter">
                     <label class="form-check-label" for="newChapter">
                         New Chapter
@@ -115,6 +121,12 @@
             <label for="structsControl" class="col-sm-2 col-form-label">Vocabulary</label>
             <div class="col-sm-10" id="kanji">
                 <input type="text" class="form-control" name="vocabulary" placeholder="Vocabulary word" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="structsControl" class="col-sm-2 col-form-label">Han Viet</label>
+            <div class="col-sm-10" id="hanviet">
+                <input type="text" class="form-control" name="hanviet" placeholder="Han viet word" />
             </div>
         </div>
         <div class="mb-3 row">

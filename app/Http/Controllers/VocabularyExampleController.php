@@ -33,9 +33,10 @@ class VocabularyExampleController extends Controller
             $voca = VocabularyExample::where('cateId', $cate)->get();
         } else {
             $chapter =1;
-            $chapterName = Vocabulary::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
-            $voca = VocabularyExample::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
+            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName');
+            $voca = VocabularyExample::where('cateId', 1)->where('chapter', $chapter)->get();
+            
         }
         $localVocaName = '';
         if(isset($vocaparam)){

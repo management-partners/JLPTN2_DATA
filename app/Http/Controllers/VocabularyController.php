@@ -39,10 +39,12 @@ class VocabularyController extends Controller
                 $chapterName    = $vocabulary[0]->chapterName;
             }
         } else {
+            
             $chapter =1;
-            $chapterName = Vocabulary::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
-            $vocabulary = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get();
             $cate = 1;
+            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName');
+            $vocabulary = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get();
+            
         }
         
        
@@ -171,6 +173,7 @@ class VocabularyController extends Controller
                 'chapter'       => $request->chapter,
                 'chapterName'   => $request->chapter_name,
                 'vocabulary'    => $request->vocabulary,
+                'hanviet'       => $request->hanviet,
                 'onRead'        => $request->onRead,
                 'mean'          => $request->mean,
             ]);
@@ -180,7 +183,7 @@ class VocabularyController extends Controller
             \Session::flash('fail', 'Vocabulary unsuccessfully updated.');
         }
 
-        $vocabulary = Vocabulary::where('id', $voca->id)->get();
+        $vocabulary = Vocabulary::where('id', $id)->get();
         
         return view('vocabulary.vocabulary',['lstVocabulary'=> VocabularyResource::collection($vocabulary), 'searchCate' => $request->category, 'searchChapter' => $request->chapter, 'searchChapterName' => $request->chapter_name, 'searchVoca' => $id, 'searchVocaName' => $request->vocabulary]);
     }
