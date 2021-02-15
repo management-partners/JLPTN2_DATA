@@ -34,7 +34,7 @@ class VocabularyExampleController extends Controller
         } else {
             $chapter =1;
             $cate = 1;
-            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName')[0]->chapterName;
+            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName')[0]->cg;
             $voca = VocabularyExample::where('cateId', 1)->where('chapter', $chapter)->get();
             
         }

@@ -33,16 +33,16 @@ class VocabularyController extends Controller
             $vocabulary     = Vocabulary::where('chapter', $chapter)->where('id', $voca)->get();
             $chapterName    = $vocabulary[0]->chapterName;
             $vocaName       = $vocabulary[0]->vocabulary;
-        } elseif (isset($cate)) {
-            $vocabulary = Vocabulary::where('cateId', $cate)->get();
+        } elseif (isset($cate) && isset($chapter)) {
+             
+            $vocabulary = Vocabulary::where('cateId', $cate)->where('chapter', $chapter)->get();
             if( count($vocabulary) > 0){
                 $chapterName    = $vocabulary[0]->chapterName;
             }
         } else {
-            
             $chapter =1;
             $cate = 1;
-            $chapterName = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get('chapterName')[0]->chapterName;
+            $chapterName = Vocabulary::where('chapter', $chapter)->get('chapterName')[0]->chapterName;
             $vocabulary = Vocabulary::where('cateId', 1)->where('chapter', $chapter)->get();
             
         }
@@ -119,7 +119,6 @@ class VocabularyController extends Controller
         } else {
             $kanjiEx = Vocabulary::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
         }
-
         return ['results' => VocabularyChapterResource::collection($kanjiEx)];
     }
 
