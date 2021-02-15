@@ -76,6 +76,7 @@ class VocabularyController extends Controller
                 'exampleId'     => 0,
                 'chapterName'   => $chapterName,
                 'vocabulary'    => $request->vocabulary,
+                'hanviet'       => $request->hanviet,
                 'onRead'        => $request->onRead,
                 'mean'          => $request->mean,
                 'isolation'     => 0,
