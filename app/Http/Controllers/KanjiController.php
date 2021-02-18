@@ -37,7 +37,7 @@ class KanjiController extends Controller
         }else {
             $chapter  = 1;
             $chapterName = Kanji::where('chapter', $chapter)->get('chapterName')->first()->chapterName;
-            $lstKanji = Kanji::where('cateId', 1)->where('chapter', $chapter)->get();
+            $lstKanji = Kanji::where('cateId', 1)->get();
             $cate = 1;
             
         }
@@ -57,7 +57,7 @@ class KanjiController extends Controller
      */
     public function create()
     { 
-        $chapter = Kanji::groupBy('chapter')->get(['chapter', 'chapterName']);
+        $chapter = Kanji::groupBy('chapterName')->orderBy('chapter')->get(['chapter', 'chapterName']);
 
         return view('kanji.kanji_action', ['lstChapter' => KanjiChapterResource::collection($chapter)]);
     }
@@ -119,7 +119,7 @@ class KanjiController extends Controller
     public function show($id)
     { 
         $kanji = Kanji::find($id);
-        $chapter = Kanji::groupBy('chapter')->get(['chapter', 'chapterName']);
+        $chapter = Kanji::groupBy('chapterName')->orderBy('chapter')->get(['chapter', 'chapterName']);
 
         return view('kanji.kanji_action', ['lstChapter' => KanjiChapterResource::collection($chapter), 'kanji' => new KanjiResource($kanji)]);
     }
@@ -135,9 +135,9 @@ class KanjiController extends Controller
         $cate = $request->cate;
         $kanjiEx = [];
         if (isset($search)) {
-            $kanjiEx = Kanji::where('cateId', $cate)->where('chapterName', 'LIKE', '%'.$search.'%')->groupBy('chapter')->get(['chapter', 'chapterName']);
+            $kanjiEx = Kanji::where('cateId', $cate)->where('chapterName', 'LIKE', '%'.$search.'%')->groupBy('chapter')->orderBy('chapter')->get(['chapter', 'chapterName']);
         } else {
-            $kanjiEx = Kanji::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
+            $kanjiEx = Kanji::where('cateId', $cate)->groupBy('chapter')->orderBy('chapter')->get(['chapter', 'chapterName']);
         }
 
         return ['results' => KanjiChapterResource::collection($kanjiEx)];

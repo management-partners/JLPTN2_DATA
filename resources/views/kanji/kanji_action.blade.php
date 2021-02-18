@@ -49,7 +49,7 @@
         <div class="mb-3 row">
             <label for="structsControl" class="col-sm-2 col-form-label">Kani</label>
             <div class="col-sm-10" id="kanji">
-                <input type="text" class="form-control" name="kanji" value="{{ $kanji->kanji }}" />
+                <input type="text" class="form-control" name="kanji" value="{{ $kanji->kanji }}" autofocus />
             </div>
         </div>
         <div class="mb-3 row">
