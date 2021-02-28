@@ -139,7 +139,7 @@ $(document).ready(function(){
     });
 });
 </script>
-<script>
+<script> 
     $(document).ready(function() {
         $('#chapter').select2({
             placeholder: "Choose chapter...",

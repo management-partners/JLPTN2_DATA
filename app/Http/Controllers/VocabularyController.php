@@ -22,6 +22,7 @@ class VocabularyController extends Controller
         $cate           = $request->category;
         $chapter        = $request->chapter;
         $voca           = $request->voca;
+        
         $chapterName    = '';
         $vocaName       = '';
         $vocabulary = [];
@@ -39,7 +40,10 @@ class VocabularyController extends Controller
             if( count($vocabulary) > 0){
                 $chapterName    = $vocabulary[0]->chapterName;
             }
-        } else {
+        } else if(isset($cate)){
+            $vocabulary = Vocabulary::where('cateId', $cate)->get();
+        }
+        else {
             $chapter =1;
             $cate = 1;
             $chapterName = Vocabulary::where('chapter', $chapter)->get('chapterName')[0]->chapterName;
@@ -115,7 +119,7 @@ class VocabularyController extends Controller
         $search = $request->key;
         $cate = $request->cate;
         $kanjiEx = [];
-        if (isset($search)) {
+        if (isset($search)) { 
             $kanjiEx = Vocabulary::where('cateId', $cate)->where('chapterName', 'LIKE', '%'.$search.'%')->groupBy('chapter')->get(['chapter', 'chapterName']);
         } else {
             $kanjiEx = Vocabulary::where('cateId', $cate)->groupBy('chapter')->get(['chapter', 'chapterName']);
